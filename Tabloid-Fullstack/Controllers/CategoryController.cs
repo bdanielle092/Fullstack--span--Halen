@@ -54,6 +54,20 @@ namespace Tabloid_Fullstack.Controllers
             return CreatedAtAction("Get", new { id = category.Id }, category);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(Category category)
+        {
+            var currentUser = GetCurrentUserProfile();
+
+            if (currentUser.UserTypeId != UserType.ADMIN_ID)
+            {
+                return Unauthorized();
+            }
+            _categoryRepo.Update(category);
+            return NoContent();
+
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

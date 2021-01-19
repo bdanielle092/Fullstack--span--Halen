@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,12 @@ namespace Tabloid_Fullstack.Repositories
         public void Add(Category category)
         {
             _context.Add(category);
+            _context.SaveChanges();
+        }
+
+        public void Update(Category category)
+        {
+            _context.Entry(category).State = EntityState.Modified;
             _context.SaveChanges();
         }
     }
