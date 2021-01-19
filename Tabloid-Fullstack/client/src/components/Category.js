@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Button,
   ButtonGroup,
@@ -10,11 +10,15 @@ import {
   ModalFooter,
   ModalHeader,
 } from "reactstrap";
+import { UserProfileContext } from "../providers/UserProfileProvider";
 
-const Category = ({ category }) => {
+//add onEdit here so we can use it on after the edit it complete so we can get all the categories
+const Category = ({ category, onEdit }) => {
+  const { getToken } = useContext(UserProfileContext);
   const [isEditing, setIsEditing] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(false);
   const [categoryEdits, setCategoryEdits] = useState("");
+
 
   const showEditForm = () => {
     setIsEditing(true);
@@ -24,6 +28,27 @@ const Category = ({ category }) => {
   const hideEditForm = () => {
     setIsEditing(false);
     setCategoryEdits("");
+  };
+
+  const saveEditForm = () => {
+
+    const categoryToEdit = { id: category.id, name: categoryEdits };
+    getToken().then((token) =>
+      fetch(`/api/category/${category.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(categoryToEdit),
+      }).then(() => {
+        //setIsEditing to false so the edit button comes back after clicking the save button
+        setIsEditing(false);
+        //allows user to see all the categories after the edit is complete
+        onEdit();
+
+      })
+    );
   };
 
   return (
@@ -37,7 +62,7 @@ const Category = ({ category }) => {
               value={categoryEdits}
             />
             <ButtonGroup size="sm">
-              <Button onClick={showEditForm}>Save</Button>
+              <Button onClick={saveEditForm}>Save</Button>
               <Button outline color="danger" onClick={hideEditForm}>
                 Cancel
               </Button>
@@ -45,21 +70,21 @@ const Category = ({ category }) => {
           </InputGroup>
         </Form>
       ) : (
-        <>
-          <div className="p-1">{category.name}</div>
-          <ButtonGroup size="sm">
-            <Button className="btn btn-primary" onClick={showEditForm}>
-              Edit
+          <>
+            <div className="p-1">{category.name}</div>
+            <ButtonGroup size="sm">
+              <Button className="btn btn-primary" onClick={showEditForm}>
+                Edit
             </Button>
-            <Button
-              className="btn btn-danger"
-              onClick={(e) => setPendingDelete(true)}
-            >
-              Delete
+              <Button
+                className="btn btn-danger"
+                onClick={(e) => setPendingDelete(true)}
+              >
+                Delete
             </Button>
-          </ButtonGroup>
-        </>
-      )}
+            </ButtonGroup>
+          </>
+        )}
       {/* DELETE CONFIRM MODAL */}
       <Modal isOpen={pendingDelete}>
         <ModalHeader>Delele {category.name}?</ModalHeader>
