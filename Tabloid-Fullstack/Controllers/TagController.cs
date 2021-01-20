@@ -52,6 +52,7 @@ namespace Tabloid_Fullstack.Controllers
             _tagRepository.Add(tag);
             return CreatedAtAction("Get", new { id = tag.Id }, tag);
         }
+<<<<<<< HEAD
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -59,5 +60,25 @@ namespace Tabloid_Fullstack.Controllers
             return NoContent();
         }
 
+=======
+       [HttpPut("{id}")]
+       public IActionResult Put(int id, Tag tag)
+        {
+            //Check if the id's match
+            if( id != tag.Id)
+            {
+                return BadRequest();
+            }
+            //Check if the user is admin
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.UserTypeId != UserType.ADMIN_ID)
+            {
+                return NotFound();
+            }
+            //Allow update
+            _tagRepository.Update(tag);
+            return NoContent();
+        }
+>>>>>>> main
     }
 }

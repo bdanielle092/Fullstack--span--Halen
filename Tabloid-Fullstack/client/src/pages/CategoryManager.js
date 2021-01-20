@@ -49,7 +49,7 @@ const CategoryManager = () => {
       })
     );
   };
-
+  //add an onEdit to use in Category to give access to getCategories
   return (
     <div className="container mt-5">
       <img
@@ -64,7 +64,7 @@ const CategoryManager = () => {
           <ListGroup>
             {categories.map((category) => (
               <ListGroupItem key={category.id}>
-                <Category category={category} />
+                <Category category={category} onEdit={getCategories} />
               </ListGroupItem>
             ))}
           </ListGroup>

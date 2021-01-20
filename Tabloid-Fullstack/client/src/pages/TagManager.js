@@ -8,12 +8,14 @@ import {
     Button,
 } from "reactstrap";
 import Tag from "../components/Tag"
+import { Redirect } from "react-router-dom";
 
 
 const TagManager = () => {
     const { getToken } = useContext(UserProfileContext);
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState("");
+    const { isAdmin } = useContext(UserProfileContext);
 
     useEffect(() => {
         getTags();
@@ -50,6 +52,7 @@ const TagManager = () => {
         );
     };
     return (
+
         <div className="container mt-5">
             <img
                 height="100"
@@ -63,7 +66,7 @@ const TagManager = () => {
                     <ListGroup>
                         {tags.map((tag) => (
                             <ListGroupItem key={tag.id}>
-                                <Tag tag={tag} />
+                                <Tag tag={tag} onEdit={getTags} />
                             </ListGroupItem>
                         ))}
                     </ListGroup>
@@ -81,5 +84,6 @@ const TagManager = () => {
             </div>
         </div>
     );
+
 };
 export default TagManager;

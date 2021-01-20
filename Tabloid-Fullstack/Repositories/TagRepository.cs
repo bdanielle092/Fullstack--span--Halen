@@ -24,6 +24,7 @@ namespace Tabloid_Fullstack.Repositories
             _context.Add(tag);
             _context.SaveChanges();
         }
+<<<<<<< HEAD
         public Tag GetTagById(int id)
         {
             return _context.Tag.FirstOrDefault(t => t.Id == id);
@@ -35,5 +36,12 @@ namespace Tabloid_Fullstack.Repositories
             _context.SaveChanges();
         }
 
+=======
+        public void Update(Tag tag)
+        {
+            _context.Entry(tag).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.SaveChanges();
+        }
+>>>>>>> main
     }
 }

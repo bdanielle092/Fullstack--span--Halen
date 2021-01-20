@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Tabloid_Fullstack.Models;
 using Tabloid_Fullstack.Models.ViewModels;
 using Tabloid_Fullstack.Repositories;
 
@@ -13,11 +15,13 @@ namespace Tabloid_Fullstack.Controllers
     public class PostController : ControllerBase
     {
 
-        private IPostRepository _repo;
+        private readonly IPostRepository _repo;
+        private readonly IUserProfileRepository _userRepo;
 
-        public PostController(IPostRepository repo)
+        public PostController(IPostRepository repo, IUserProfileRepository userRepo)
         {
             _repo = repo;
+            _userRepo = userRepo;
         }
 
 
@@ -44,6 +48,21 @@ namespace Tabloid_Fullstack.Controllers
                 ReactionCounts = reactionCounts
             };
             return Ok(postDetails);
+        }
+        [HttpPost]
+        public IActionResult Add(Post post)
+        {
+            var user = GetCurrentUserProfile();
+            post.UserProfileId = user.Id;
+            post.CreateDateTime = DateTime.Now;
+            post.IsApproved = true;
+            _repo.Add(post);
+            return Ok(post);
+        }
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepo.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

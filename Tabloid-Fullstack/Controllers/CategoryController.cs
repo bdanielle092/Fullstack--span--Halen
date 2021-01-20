@@ -40,6 +40,23 @@ namespace Tabloid_Fullstack.Controllers
             return Ok(categories);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var currentUser = GetCurrentUserProfile();
+
+            if (currentUser.UserTypeId != UserType.ADMIN_ID)
+            {
+                return Unauthorized();
+            }
+            var category = _categoryRepo.GetById(id);
+            if(category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
+        }
+
         [HttpPost]
         public IActionResult Post(Category category)
         {
@@ -52,6 +69,24 @@ namespace Tabloid_Fullstack.Controllers
 
             _categoryRepo.Add(category);
             return CreatedAtAction("Get", new { id = category.Id }, category);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Category category)
+        {
+           if( id != category.Id)
+            {
+                return BadRequest();
+            }
+            var currentUser = GetCurrentUserProfile();
+
+            if (currentUser.UserTypeId != UserType.ADMIN_ID)
+            {
+                return Unauthorized();
+            }
+            _categoryRepo.Update(category);
+            return NoContent();
+
         }
 
         private UserProfile GetCurrentUserProfile()
