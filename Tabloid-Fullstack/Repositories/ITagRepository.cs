@@ -9,8 +9,6 @@ namespace Tabloid_Fullstack.Repositories
         public void Add(Tag tag);
 
         public Tag GetTagById(int id);
-        public void Delete(int id);
-
 
         public void Update(Tag tag);
 

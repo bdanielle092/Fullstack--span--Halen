@@ -53,13 +53,6 @@ namespace Tabloid_Fullstack.Controllers
             return CreatedAtAction("Get", new { id = tag.Id }, tag);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            _tagRepository.Delete(id);
-            return NoContent();
-        }
-
 
        [HttpPut("{id}")]
        public IActionResult Put(int id, Tag tag)

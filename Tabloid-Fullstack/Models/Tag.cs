@@ -11,5 +11,6 @@ namespace Tabloid_Fullstack.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public PostTag PostTag { get; set; }
     }
 }

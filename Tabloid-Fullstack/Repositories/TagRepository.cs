@@ -29,13 +29,8 @@ namespace Tabloid_Fullstack.Repositories
         {
             return _context.Tag.FirstOrDefault(t => t.Id == id);
         }
-        public void Delete(int id)
-        {
-            var tag = GetTagById(id);
-            _context.Tag.Remove(tag);
-            _context.SaveChanges();
-        }
 
+        
 
         public void Update(Tag tag)
         {
