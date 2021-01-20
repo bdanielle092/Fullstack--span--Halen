@@ -28,6 +28,8 @@ namespace Tabloid_Fullstack.Models
         public UserProfile UserProfile { get; set; }
         public List<PostReaction> PostReactions { get; set; }
         public Comment Comment { get; set; }
-        //public List<Comment> Comments { get; set; }
+
+        [ForeignKey("Id")]
+        public List<Comment> Comments { get; set; }
     }
 }
