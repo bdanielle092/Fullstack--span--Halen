@@ -16,7 +16,7 @@ const Tag = ({ tag }) => {
     };
 
     return (
-        <div className="justify-content-between-row">
+        <div className="justify-content-between row">
             {/* If user is editing */}
             {isEditing ? (
                 <Form className="w-100">
@@ -36,8 +36,15 @@ const Tag = ({ tag }) => {
                     <>
                         <div className="p-1">{tag.name}</div>
                         <ButtonGroup size="sm">
-                            <Button className="btm btn-primary" onClick={showEdit}>Edit</Button>
-                            <Button className="btn btn-danger" onClick={(e) => setPendingDelete(true)}>Delete</Button>
+                            <Button className="btn btn-primary" onClick={showEdit}>
+                                Edit
+                    </Button>
+                            <Button
+                                className="btn btn-danger"
+                                onClick={(e) => setPendingDelete(true)}
+                            >
+                                Delete
+                    </Button>
                         </ButtonGroup>
                     </>
                 )}
