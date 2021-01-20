@@ -13,7 +13,7 @@ import {
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
 //add onEdit here so we can use it on after the edit it complete so we can get all the categories
-const Category = ({ category, onEdit }) => {
+const Category = ({ category, onEdit, onDelete }) => {
   const { getToken } = useContext(UserProfileContext);
   const [isEditing, setIsEditing] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(false);
@@ -47,6 +47,24 @@ const Category = ({ category, onEdit }) => {
         //allows user to see all the categories after the edit is complete
         onEdit();
 
+      })
+    );
+  };
+
+
+  const savePendingDelete = () => {
+    const categoryToDelete = { id: category.id, name: categoryEdits };
+    getToken().then((token) =>
+      fetch(`/api/category/${category.id}`, {
+        method: "Delete",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(categoryToDelete),
+      }).then(() => {
+        setPendingDelete(false);
+        onDelete();
       })
     );
   };
