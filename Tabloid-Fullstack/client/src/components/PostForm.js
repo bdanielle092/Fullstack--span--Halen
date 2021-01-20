@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Form,
@@ -12,15 +12,22 @@ import {
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
 const PostForm = () => {
+  const [post, setPost] = useState([]);
   const { getToken } = useContext(UserProfileContext);
   const [imageLocation, setImageLocation] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [categoryId, setCategoryId] = useState("");
-  const [publicationDate, setPublicationDate] = useState("");
+  const [publishDateTime, setPublicationDate] = useState("");
 
   // Use this hook to allow us to programatically redirect users
   const history = useHistory();
+
+  const imageHeader = useRef(null);
+  const postTitle = useRef(null);
+  const postContent = useRef(null);
+  const publishDate = useRef(null);
+  const catId = useRef(null);
 
   const submit = (e) => {
     const post = {
@@ -28,9 +35,8 @@ const PostForm = () => {
       title,
       content,
       categoryId,
-      publicationDate,
+      publishDateTime,
     };
-
     getToken().then((token) =>
       fetch("/api/post", {
         method: "POST",
@@ -45,6 +51,7 @@ const PostForm = () => {
       })
     );
   };
+
   return (
     <div className="container pt-4">
       <div className="row justify-content-center">
@@ -55,17 +62,23 @@ const PostForm = () => {
                 <Label for="imageLocation">Header Image URL</Label>
                 <Input
                   id="imageLocation"
+                  useRef={imageHeader}
                   onChange={(e) => setImageLocation(e.target.value)}
                 />
               </FormGroup>
               <FormGroup>
                 <Label for="title">Title</Label>
-                <Input id="title" onChange={(e) => setTitle(e.target.value)} />
+                <Input
+                  id="title"
+                  useRef={postTitle}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="content">Content</Label>
                 <Input
                   id="content"
+                  useRef={postContent}
                   onChange={(e) => setContent(e.target.value)}
                 />
               </FormGroup>
@@ -73,18 +86,26 @@ const PostForm = () => {
                 <Label for="categoryId">Category Id</Label>
                 <Input
                   id="categoryId"
+                  useRef={catId}
                   onChange={(e) => setCategoryId(e.target.value)}
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="publicationDate">Publication Date</Label>
+                <Label for="publishDateTime">Publication Date</Label>
                 <Input
-                  id="publicationDate"
+                  id="publishDateTime"
+                  useRef={publishDate}
                   onChange={(e) => setPublicationDate(e.target.value)}
                 />
               </FormGroup>
             </Form>
-            <Button color="danger" onClick={submit}>
+            <Button
+              color="danger"
+              onClick={(e) => {
+                e.preventDefault();
+                submit(post);
+              }}
+            >
               SUBMIT POST
             </Button>
           </CardBody>
