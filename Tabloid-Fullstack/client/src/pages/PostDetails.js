@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Jumbotron } from "reactstrap";
 import { Row } from "reactstrap";
 import { Col } from "reactstrap";
+import { Button } from "reactstrap"
 import PostReactions from "../components/PostReactions";
 import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
@@ -33,13 +34,8 @@ const PostDetails = () => {
   const comment = () => {
     if (post.comment === null) {
       return <>
-        <Row className="mt-5 ml-1">
-          <Col>
-            <h3>Comments</h3>
-          </Col>
-        </Row>
         <Row >
-          <Col className="ml-3 mt-3">
+          <Col className="ml-3 mt-5">
             <div><strong className=" font-weight-bold">There are no comments.</strong></div>
           </Col>
         </Row>
@@ -47,36 +43,31 @@ const PostDetails = () => {
     }
     else {
       return <>
-        <Row className="mt-5 ml-5">
-          <Col>
-            <h3>Comments</h3>
-          </Col>
-        </Row>
         <Row >
           <Col></Col>
-          <Col md={7} className="text-left mt-3">
-            <div><strong className=" font-weight-bold">Subject:</strong> {post.comment ? post.comment.subject : ""} </div>
+          <Col md={7} className="text-left mt-5">
+            <div><strong className=" font-weight-bold">Subject:</strong>&nbsp; {post.comment ? post.comment.subject : ""} </div>
           </Col>
           <Col></Col>
         </Row>
         <Row>
           <Col></Col>
           <Col md={7} className="text-left mt-3">
-            <div><strong className=" font-weight-bold">Comment:</strong>  {post.comment ? post.comment.content : ""}</div>
+            <div><strong className=" font-weight-bold">Comment:</strong>&nbsp;  {post.comment ? post.comment.content : ""}</div>
           </Col>
           <Col></Col>
         </Row>
         <Row>
           <Col></Col>
           <Col md={7} className="text-left mt-3">
-            <div><strong className=" font-weight-bold">Author:</strong>  {post.comment ? post.comment.userProfile.displayName : ""}</div>
+            <div><strong className=" font-weight-bold">Author:</strong>&nbsp;  {post.comment ? post.comment.userProfile.displayName : ""}</div>
           </Col>
           <Col></Col>
         </Row>
         <Row>
           <Col></Col>
           <Col md={7} className="text-left mb-5 mt-3">
-            <div> <strong className=" font-weight-bold">Posted:</strong>  {post.comment ? formatDate(post.comment.createDateTime) : ""} </div>
+            <div> <strong className=" font-weight-bold">Posted:</strong>&nbsp;  {post.comment ? formatDate(post.comment.createDateTime) : ""} </div>
           </Col>
           <Col></Col>
         </Row>
@@ -113,6 +104,19 @@ const PostDetails = () => {
         </div>
         <br />
       </div>
+      <Row className="mt-5 ml-2">
+        <Col>
+          <h3>Comments</h3>
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col className="ml-4">
+          <Button color="success" >Add New Comment
+          </Button>
+        </Col>
+        <Col>
+        </Col>
+      </Row>
       {comment()}
 
     </div >
