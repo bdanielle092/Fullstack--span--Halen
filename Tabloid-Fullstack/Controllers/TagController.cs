@@ -52,6 +52,8 @@ namespace Tabloid_Fullstack.Controllers
             _tagRepository.Add(tag);
             return CreatedAtAction("Get", new { id = tag.Id }, tag);
         }
+
+
        [HttpPut("{id}")]
        public IActionResult Put(int id, Tag tag)
         {
@@ -68,6 +70,18 @@ namespace Tabloid_Fullstack.Controllers
             }
             //Allow update
             _tagRepository.Update(tag);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public  IActionResult Delete(int id)
+        {
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.UserTypeId != UserType.ADMIN_ID)
+            {
+                return Unauthorized();
+            }
+            _tagRepository.Delete(id);
             return NoContent();
         }
     }

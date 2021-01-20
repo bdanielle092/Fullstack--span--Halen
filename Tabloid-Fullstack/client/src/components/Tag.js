@@ -1,8 +1,9 @@
+import userEvent from "@testing-library/user-event";
 import React, { useState, useContext, useEffect } from "react";
-import { Button, Input, InputGroup, ButtonGroup, Form } from "reactstrap";
-import { UserProfileContext } from "../providers/UserProfileProvider"
+import { Button, Input, InputGroup, ButtonGroup, Form, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { UserProfileContext } from "../providers/UserProfileProvider";
 
-const Tag = ({ tag, onEdit }) => {
+const Tag = ({ tag, onEdit, onDelete }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [pendingDelete, setPendingDelete] = useState(false);
     const [tagEdits, setTagEdits] = useState("");
@@ -33,6 +34,22 @@ const Tag = ({ tag, onEdit }) => {
             })
         );
     };
+
+    const saveDelete = () => {
+        const tagToDelete = { id: tag.id }
+        getToken().then((token) =>
+            fetch(`/api/tag/${tag.id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(tagToDelete)
+            }).then(() => {
+                setPendingDelete(false);
+                onDelete();
+            }))
+    }
 
     return (
         <div className="justify-content-between row">
@@ -67,7 +84,17 @@ const Tag = ({ tag, onEdit }) => {
                         </ButtonGroup>
                     </>
                 )}
-
+            <Modal isOpen={pendingDelete}>
+                <ModalHeader>Delete {tag.name}?</ModalHeader>
+                <ModalBody>
+                    Are you sure you want to delete {tag.name} tag? This action cannot be
+          undone.
+        </ModalBody>
+                <ModalFooter>
+                    <Button onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
+                    <Button onClick={saveDelete} className="btn btn-outline-danger">Yes, Delete</Button>
+                </ModalFooter>
+            </Modal>
         </div>
     );
 };
