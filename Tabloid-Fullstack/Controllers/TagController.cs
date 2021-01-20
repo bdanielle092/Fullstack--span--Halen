@@ -52,7 +52,7 @@ namespace Tabloid_Fullstack.Controllers
             _tagRepository.Add(tag);
             return CreatedAtAction("Get", new { id = tag.Id }, tag);
         }
-<<<<<<< HEAD
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -60,7 +60,7 @@ namespace Tabloid_Fullstack.Controllers
             return NoContent();
         }
 
-=======
+
        [HttpPut("{id}")]
        public IActionResult Put(int id, Tag tag)
         {
@@ -79,6 +79,6 @@ namespace Tabloid_Fullstack.Controllers
             _tagRepository.Update(tag);
             return NoContent();
         }
->>>>>>> main
+
     }
 }
