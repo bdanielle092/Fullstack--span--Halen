@@ -5,6 +5,7 @@ import Explore from "../pages/Explore";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PostDetails from "../pages/PostDetails";
+import PostForm from "./PostForm";
 import CategoryManager from "../pages/CategoryManager";
 import TagManager from "../pages/TagManager";
 
@@ -18,6 +19,9 @@ const ApplicationViews = () => {
       </Route>
       <Route path="/explore">
         {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
+      </Route>
+      <Route path="/post/add">
+        {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
       </Route>
       <Route path="/post/:postId">
         {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}

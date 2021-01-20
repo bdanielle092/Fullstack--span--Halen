@@ -15,7 +15,7 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 
 const AppHeader = () => {
   const { getCurrentUser, logout, isAdmin } = useContext(UserProfileContext);
-  const user = getCurrentUser();
+  const user = JSON.parse(localStorage.getItem("userProfile"));
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,6 +50,11 @@ const AppHeader = () => {
                 <NavItem>
                   <NavLink to="/explore" tag={Link}>
                     Explore
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/post/add" tag={Link}>
+                    New Post
                   </NavLink>
                 </NavItem>
                 {isAdmin() && (

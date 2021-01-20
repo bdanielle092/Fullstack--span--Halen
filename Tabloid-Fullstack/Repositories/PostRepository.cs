@@ -58,5 +58,10 @@ namespace Tabloid_Fullstack.Repositories
                 })
                 .ToList();
         }
+        public void Add(Post post)
+        {
+            _context.Add(post);
+            _context.SaveChanges();
+        }
     }
 }
