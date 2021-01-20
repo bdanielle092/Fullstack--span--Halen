@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, Input, InputGroup, ButtonGroup, Form } from "reactstrap";
+import { UserProfileContext } from "../providers/UserProfileProvider"
 
-const Tag = ({ tag }) => {
+const Tag = ({ tag, onEdit }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [pendingDelete, setPendingDelete] = useState(false);
     const [tagEdits, setTagEdits] = useState("");
+    const { getToken } = useContext(UserProfileContext);
 
     const showEdit = () => {
         setIsEditing(true);
@@ -13,6 +15,23 @@ const Tag = ({ tag }) => {
     const hideEdit = () => {
         setIsEditing(false);
         setTagEdits("");
+    };
+
+    const saveEdit = () => {
+        const tagToEdit = { id: tag.id, name: tagEdits }
+        getToken().then((token) =>
+            fetch(`/api/tag/${tag.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(tagToEdit),
+            }).then(() => {
+                setIsEditing(false);
+                onEdit();
+            })
+        );
     };
 
     return (
@@ -24,7 +43,7 @@ const Tag = ({ tag }) => {
                         <Input size="sm" onChange={(e) => setTagEdits(e.target.value)}
                             value={tagEdits} />
                         <ButtonGroup size="sm">
-                            <Button onClick={showEdit}>Save</Button>
+                            <Button onClick={saveEdit}>Save</Button>
                             <Button outline color="danger" onClick={hideEdit}>
                                 Cancel
                         </Button>
