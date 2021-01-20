@@ -11,6 +11,8 @@ import TagManager from "../pages/TagManager";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
+  const { isAdmin } = useContext(UserProfileContext);
+
 
   return (
     <Switch>
