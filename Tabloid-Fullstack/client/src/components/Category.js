@@ -52,8 +52,8 @@ const Category = ({ category, onEdit, onDelete }) => {
   };
 
 
-  const savePendingDelete = () => {
-    const categoryToDelete = { id: category.id, name: categoryEdits };
+  const savePendingDelete = (id) => {
+    const categoryToDelete = { id: category.id };
     getToken().then((token) =>
       fetch(`/api/category/${category.id}`, {
         method: "Delete",
@@ -112,7 +112,7 @@ const Category = ({ category, onEdit, onDelete }) => {
         </ModalBody>
         <ModalFooter>
           <Button onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
-          <Button className="btn btn-outline-danger">Yes, Delete</Button>
+          <Button className="btn btn-outline-danger" onClick={savePendingDelete}>Yes, Delete</Button>
         </ModalFooter>
       </Modal>
     </div>
