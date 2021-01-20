@@ -30,7 +30,7 @@ namespace Tabloid_Fullstack.Controllers
             var currentUser = GetCurrentUserProfile();
             if(currentUser.UserTypeId != UserType.ADMIN_ID)
             {
-                return Unauthorized();
+                return NotFound();
             }
             var tags = _tagRepository.Get();
             return Ok(tags);
@@ -40,6 +40,17 @@ namespace Tabloid_Fullstack.Controllers
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _userRepo.GetByFirebaseUserId(firebaseUserId);
+        }
+        [HttpPost]
+        public IActionResult Post(Tag tag)
+        {
+            var currentUser = GetCurrentUserProfile();
+            if(currentUser.UserTypeId != UserType.ADMIN_ID)
+            {
+                return NotFound();
+            }
+            _tagRepository.Add(tag);
+            return CreatedAtAction("Get", new { id = tag.Id }, tag);
         }
     }
 }
