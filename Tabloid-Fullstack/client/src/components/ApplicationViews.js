@@ -11,6 +11,7 @@ import CommentForm from "../pages/CommentForm";
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
 
+
   return (
     <Switch>
       <Route path="/" exact>
@@ -19,10 +20,10 @@ const ApplicationViews = () => {
       <Route path="/explore">
         {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
       </Route>
-      <Route path="/post/:postId">
+      <Route path="/post/:postId(\d+)">
         {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
       </Route>
-      <Route path="/post/addcomment">
+      <Route path="/post/addcomment/:postId(\d+)">
         {isLoggedIn ? <CommentForm /> : <Redirect to="/login" />}
       </Route>
       <Route path="/categories">

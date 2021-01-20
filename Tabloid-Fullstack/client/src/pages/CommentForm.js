@@ -1,21 +1,20 @@
 import formatDate from "../utils/dateFormatter";
 import { UserProfileContext } from "../providers/UserProfileProvider";
-
 import React, { useEffect, useState, useContext } from "react"
 // import { ItemContext } from "./AppDataProvider.js"
 import { useHistory, useParams } from "react-router-dom"
 // import { Route, withRouter } from 'react-router-dom';
-import { Button, Card, CardBody, Form, FormGroup, Label, Input } from "reactstrap"
+import { Button, Col, Card, CardBody, Form, FormGroup, Label, Input, Row } from "reactstrap"
 
 export const CommentForm = () => {
-
-    const { getToken } = useContext(UserProfileContext);
+    const { postId } = useParams();
+    // const { getToken } = useContext(UserProfileContext);
     // const [imageLocation, setImageLocation] = useState("");
     const [subject, setSubject] = useState("");
     const [content, setContent] = useState("");
     // const [categoryId, setCategoryId] = useState("");
     // const [publishDateTime, setPublicationDate] = useState("");
-
+    const { getToken } = useContext(UserProfileContext);
     // Use this hook to allow us to programatically redirect users
     const history = useHistory();
 
@@ -23,48 +22,25 @@ export const CommentForm = () => {
     // const publishDate = useRef(null);
     // const catId = useRef(null);
 
-    const constructItemObject = () => {
-        // setIsLoading(true)
-        // if (itemId) {
-        //     editItems({
-        //         id: item.id,
-        //         itemName: item.itemName,
-        //         itemLocation: item.itemRoom,
-        //         itemDescription: item.itemDescription,
-        //         itemSerialNumber: item.itemSerialNumber,
-        //         itemNotes: item.itemNotes
-        //     })
-        //         .then(() => history.push("/"))
-        // } else {
-        const comment = {
-            subject,
-            content,
-        };
-        getToken().then((token) =>
-            fetch("/api/post/comment", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(comment),
-            }).then((p) => {
-                // Navigate the user to post detail
-                history.push(`/explore`);
-            })
-        );
-    }
-
-    // const submit = (e) => {
-    //     const subject = {
-    //         postId,
-    //         userProfileId,
+    // const constructItemObject = () => {
+    //     // setIsLoading(true)
+    //     // if (itemId) {
+    //     //     editItems({
+    //     //         id: item.id,
+    //     //         itemName: item.itemName,
+    //     //         itemLocation: item.itemRoom,
+    //     //         itemDescription: item.itemDescription,
+    //     //         itemSerialNumber: item.itemSerialNumber,
+    //     //         itemNotes: item.itemNotes
+    //     //     })
+    //     //         .then(() => history.push("/"))
+    //     // } else {
+    //     const comment = {
     //         subject,
     //         content,
-    //         CreateDateTime,
     //     };
     //     getToken().then((token) =>
-    //         fetch("/api/post", {
+    //         fetch("/api/post/comment", {
     //             method: "POST",
     //             headers: {
     //                 Authorization: `Bearer ${token}`,
@@ -76,12 +52,33 @@ export const CommentForm = () => {
     //             history.push(`/explore`);
     //         })
     //     );
-    // };
+    // }
+
+    const submit = () => {
+        const comment = {
+            subject,
+            content
+        };
+        getToken().then((token) =>
+            fetch("/api/post", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(comment),
+            }).then((p) => {
+                // Navigate the user to post detail
+                history.push(`/explore`);
+            })
+        );
+    };
 
     return (
         <div className="container pt-4">
             <div className="row justify-content-center">
                 <Card className="col-sm-12 col-lg-6">
+                    <h1>Add a New Comment</h1>
                     <CardBody>
                         <Form>
                             <FormGroup>
@@ -115,24 +112,32 @@ export const CommentForm = () => {
                             />
                         </FormGroup> */}
                         </Form>
-                        <Button
-                            color="success"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                constructItemObject();
-                            }}
-                        >
-                            SUBMIT POST
-              </Button>
-                        <Button
-                            color="danger"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                history.push(`/explore`);
-                            }}
-                        >
-                            Cancel
-              </Button>
+
+                        <Row>
+                            <Col></Col>
+                            <Button
+                                className="mr-4"
+                                style={{ width: 150, height: 50 }}
+                                color="success"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    submit();
+                                    history.push(`/post/${postId}`);
+                                }}
+                            >
+                                SUBMIT
+                            </Button>
+                            <Button
+                                style={{ width: 150, height: 50 }}
+                                color="danger"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    history.push(`/explore`);
+                                }}
+                            >Cancel
+                            </Button>
+                            <Col></Col>
+                        </Row>
                     </CardBody>
                 </Card>
             </div>
