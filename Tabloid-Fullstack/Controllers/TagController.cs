@@ -73,5 +73,16 @@ namespace Tabloid_Fullstack.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public  IActionResult Delete(int id)
+        {
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.UserTypeId != UserType.ADMIN_ID)
+            {
+                return Unauthorized();
+            }
+            _tagRepository.Delete(id);
+            return NoContent();
+        }
     }
 }
