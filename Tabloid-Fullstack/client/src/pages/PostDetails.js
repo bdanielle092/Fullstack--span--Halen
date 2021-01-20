@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Jumbotron } from "reactstrap";
 import { Row } from "reactstrap";
+import { Col } from "reactstrap";
 import PostReactions from "../components/PostReactions";
 import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
@@ -28,6 +29,61 @@ const PostDetails = () => {
   }, [postId]);
 
   if (!post) return null;
+
+  const comment = () => {
+    if (post.comment === null) {
+      return <>
+        <Row className="mt-5 ml-1">
+          <Col>
+            <h3>Comments</h3>
+          </Col>
+        </Row>
+        <Row >
+          <Col className="ml-3 mt-3">
+            <div><strong className=" font-weight-bold">There are no comments.</strong></div>
+          </Col>
+        </Row>
+      </>
+    }
+    else {
+      return <>
+        <Row className="mt-5 ml-5">
+          <Col>
+            <h3>Comments</h3>
+          </Col>
+        </Row>
+        <Row >
+          <Col></Col>
+          <Col md={7} className="text-left mt-3">
+            <div><strong className=" font-weight-bold">Subject:</strong> {post.comment ? post.comment.subject : ""} </div>
+          </Col>
+          <Col></Col>
+        </Row>
+        <Row>
+          <Col></Col>
+          <Col md={7} className="text-left mt-3">
+            <div><strong className=" font-weight-bold">Comment:</strong>  {post.comment ? post.comment.content : ""}</div>
+          </Col>
+          <Col></Col>
+        </Row>
+        <Row>
+          <Col></Col>
+          <Col md={7} className="text-left mt-3">
+            <div><strong className=" font-weight-bold">Author:</strong>  {post.comment ? post.comment.userProfile.displayName : ""}</div>
+          </Col>
+          <Col></Col>
+        </Row>
+        <Row>
+          <Col></Col>
+          <Col md={7} className="text-left mb-5 mt-3">
+            <div> <strong className=" font-weight-bold">Posted:</strong>  {post.comment ? formatDate(post.comment.createDateTime) : ""} </div>
+          </Col>
+          <Col></Col>
+        </Row>
+      </>
+    }
+  }
+
 
   return (
     <div>
@@ -57,22 +113,9 @@ const PostDetails = () => {
         </div>
         <br />
       </div>
-      <Row>
-        <h3>Comments</h3>
-      </Row>
-      <Row>
-        <div><strong>Subject:</strong> {post.comment ? post.comment.subject : ""} </div>
-      </Row>
-      <Row>
-        <div><strong>Comment:</strong>  {post.comment ? post.comment.content : ""}</div>
-      </Row>
-      <Row>
-        <div><strong>Author:</strong>  {post.comment ? post.comment.userProfile.displayName : ""}</div>
-      </Row>
-      <Row>
-        <div><strong>Posted:</strong>  {post.comment ? formatDate(post.comment.createDateTime) : ""} </div>
-      </Row>
-    </div>
+      {comment()}
+
+    </div >
   );
 };
 
