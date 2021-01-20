@@ -1,5 +1,7 @@
+import userEvent from "@testing-library/user-event";
 import React, { useState, useContext, useEffect } from "react";
-import { Button, Input, InputGroup, ButtonGroup, Form } from "reactstrap";
+import { Button, Input, InputGroup, ButtonGroup, Form, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { UserProfileContext } from "../providers/UserProfileProvider";
 
 const Tag = ({ tag }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -14,6 +16,7 @@ const Tag = ({ tag }) => {
         setIsEditing(false);
         setTagEdits("");
     };
+
 
     return (
         <div className="justify-content-between row">
@@ -48,7 +51,17 @@ const Tag = ({ tag }) => {
                         </ButtonGroup>
                     </>
                 )}
-
+            <Modal isOpen={pendingDelete}>
+                <ModalHeader>Delete {tag.name}?</ModalHeader>
+                <ModalBody>
+                    Are you sure you want to delete {tag.name} tag? This action cannot be
+          undone.
+        </ModalBody>
+                <ModalFooter>
+                    <Button onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
+                    <Button onClick={(e) => setPendingDelete(true)} className="btn btn-outline-danger">Yes, Delete</Button>
+                </ModalFooter>
+            </Modal>
         </div>
     );
 };
