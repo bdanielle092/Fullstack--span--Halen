@@ -45,6 +45,7 @@ namespace Tabloid_Fullstack.Repositories
                 .Include(p => p.UserProfile)
                 .Include(p => p.Category)
                 .Include(p => p.Comment)
+                    .ThenInclude(c => c.UserProfile)
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
         }
