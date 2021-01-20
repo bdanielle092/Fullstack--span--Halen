@@ -9,5 +9,6 @@ namespace Tabloid_Fullstack.Repositories
         void Add(Category category);
         void Update(Category category);
         Category GetById(int id);
+        void Delete(int id);
     }
 }
