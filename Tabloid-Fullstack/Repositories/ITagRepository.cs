@@ -6,5 +6,6 @@ namespace Tabloid_Fullstack.Repositories
     public interface ITagRepository
     {
         List<Tag> Get();
+        public void Add(Tag tag);
     }
 }

@@ -19,6 +19,10 @@ namespace Tabloid_Fullstack.Repositories
         {
             return _context.Tag.OrderBy(t => t.Name).ToList();
         }
-
+        public void Add(Tag tag)
+        {
+            _context.Add(tag);
+            _context.SaveChanges();
+        }
     }
 }
