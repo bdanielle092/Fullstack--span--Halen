@@ -87,7 +87,7 @@ const Category = ({ category, onEdit }) => {
         )}
       {/* DELETE CONFIRM MODAL */}
       <Modal isOpen={pendingDelete}>
-        <ModalHeader>Delele {category.name}?</ModalHeader>
+        <ModalHeader>Delete {category.name}?</ModalHeader>
         <ModalBody>
           Are you sure you want to delete this category? This action cannot be
           undone.
