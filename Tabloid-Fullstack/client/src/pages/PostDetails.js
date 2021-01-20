@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Jumbotron } from "reactstrap";
+import { Row } from "reactstrap";
 import PostReactions from "../components/PostReactions";
 import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
@@ -56,11 +57,21 @@ const PostDetails = () => {
         </div>
         <br />
       </div>
-      <h3>Comments</h3>
-      <div><strong>Subject:</strong>  {post.comment.subject}</div>
-      <div><strong>Comment:</strong>  {post.comment.content}</div>
-      <div><strong>Author:</strong>  {post.comment.displayName}</div>
-      <div><strong>Posted:</strong>  {formatDate(post.comment.createDateTime)}</div>
+      <Row>
+        <h3>Comments</h3>
+      </Row>
+      <Row>
+        <div><strong>Subject:</strong>  {post.comment.subject}</div>
+      </Row>
+      <Row>
+        <div><strong>Comment:</strong>  {post.comment.content}</div>
+      </Row>
+      <Row>
+        <div><strong>Author:</strong>  {post.comment.userProfile.displayName}</div>
+      </Row>
+      <Row>
+        <div><strong>Posted:</strong>  {formatDate(post.comment.createDateTime)}</div>
+      </Row>
     </div>
   );
 };
