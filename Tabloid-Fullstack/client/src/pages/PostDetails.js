@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Jumbotron } from "reactstrap";
 import { Row } from "reactstrap";
@@ -13,6 +13,8 @@ const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState();
   const [reactionCounts, setReactionCounts] = useState([]);
+  const history = useHistory();
+
 
   useEffect(() => {
     fetch(`/api/post/${postId}`)
@@ -111,7 +113,10 @@ const PostDetails = () => {
       </Row>
       <Row className="mt-3">
         <Col className="ml-4">
-          <Button color="success" >Add New Comment
+          <Button color="success"
+
+
+          >Add New Comment
           </Button>
         </Col>
         <Col>
