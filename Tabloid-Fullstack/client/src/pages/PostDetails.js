@@ -61,16 +61,16 @@ const PostDetails = () => {
         <h3>Comments</h3>
       </Row>
       <Row>
-        <div><strong>Subject:</strong>  {post.comment.subject}</div>
+        <div><strong>Subject:</strong> {post.comment ? post.comment.subject : ""} </div>
       </Row>
       <Row>
-        <div><strong>Comment:</strong>  {post.comment.content}</div>
+        <div><strong>Comment:</strong>  {post.comment ? post.comment.content : ""}</div>
       </Row>
       <Row>
-        <div><strong>Author:</strong>  {post.comment.userProfile.displayName}</div>
+        <div><strong>Author:</strong>  {post.comment ? post.comment.userProfile.displayName : ""}</div>
       </Row>
       <Row>
-        <div><strong>Posted:</strong>  {formatDate(post.comment.createDateTime)}</div>
+        <div><strong>Posted:</strong>  {post.comment ? formatDate(post.comment.createDateTime) : ""} </div>
       </Row>
     </div>
   );
