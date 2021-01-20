@@ -56,7 +56,6 @@ namespace Tabloid_Fullstack.Controllers
 
 
 
-
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -64,14 +63,13 @@ namespace Tabloid_Fullstack.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Post post)
+        public IActionResult Add(Comment comment)
         {
             var user = GetCurrentUserProfile();
-            post.UserProfileId = user.Id;
-            
-            post.CreateDateTime = DateTime.Now;
-            _repo.Add(post);
-            return Ok(post);
+            comment.UserProfileId = user.Id;
+            comment.CreateDateTime = DateTime.Now;
+            _repo.Add(comment);
+            return Ok(comment);
         }
 
 
