@@ -9,12 +9,23 @@ import PostReactions from "../components/PostReactions";
 import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
 
+import { CommentCard } from "./CommentCard"
+
+
 const PostDetails = () => {
   const { postId } = useParams();
   const [post, setPost] = useState();
   const [reactionCounts, setReactionCounts] = useState([]);
   const history = useHistory();
+  const [comments, setComments] = useState([]);
 
+  useEffect(() => {
+    fetch(`/api/comment`)
+      .then((res) => res.json())
+      .then((comments) => {
+        setComments(comments);
+      })
+  }, [])
 
   useEffect(() => {
     fetch(`/api/post/${postId}`)
@@ -33,49 +44,8 @@ const PostDetails = () => {
 
   if (!post) return null;
 
-  const comment = () => {
-    if (post.comment === null) {
-      return <>
-        <Row >
-          <Col className="ml-3 mt-5">
-            <div><strong className=" font-weight-bold">There are no comments.</strong></div>
-          </Col>
-        </Row>
-      </>
-    }
-    else {
-      return <>
-        <Row >
-          <Col></Col>
-          <Col md={7} className="text-left mt-5">
-            <div><strong className=" font-weight-bold">Subject:</strong>&nbsp; {post.comment ? post.comment.subject : ""} </div>
-          </Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <Col></Col>
-          <Col md={7} className="text-left mt-3">
-            <div><strong className=" font-weight-bold">Comment:</strong>&nbsp;  {post.comment ? post.comment.content : ""}</div>
-          </Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <Col></Col>
-          <Col md={7} className="text-left mt-3">
-            <div><strong className=" font-weight-bold">Author:</strong>&nbsp;  {post.comment ? post.comment.userProfile.displayName : ""}</div>
-          </Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <Col></Col>
-          <Col md={7} className="text-left mb-5 mt-3">
-            <div> <strong className=" font-weight-bold">Posted:</strong>&nbsp;  {post.comment ? formatDate(post.comment.createDateTime) : ""} </div>
-          </Col>
-          <Col></Col>
-        </Row>
-      </>
-    }
-  }
+
+
 
 
   return (
@@ -124,7 +94,13 @@ const PostDetails = () => {
         <Col>
         </Col>
       </Row>
-      {comment()}
+
+      {
+        comments.map(comment => {
+          return <CommentCard key={comment.id} comment={comment} />
+        })
+      }
+
 
     </div >
   );

@@ -5,6 +5,8 @@ import React, { useEffect, useState, useContext } from "react"
 import { useHistory, useParams } from "react-router-dom"
 // import { Route, withRouter } from 'react-router-dom';
 import { Button, Col, Card, CardBody, Form, FormGroup, Label, Input, Row } from "reactstrap"
+import { CommentCard } from "./CommentCard"
+
 
 export const CommentForm = () => {
     const { postId } = useParams();
@@ -17,7 +19,6 @@ export const CommentForm = () => {
     const { getToken } = useContext(UserProfileContext);
     // Use this hook to allow us to programatically redirect users
     const history = useHistory();
-
 
     // const publishDate = useRef(null);
     // const catId = useRef(null);
@@ -57,10 +58,11 @@ export const CommentForm = () => {
     const submit = () => {
         const comment = {
             subject,
-            content
+            content,
+            postId: postId
         };
         getToken().then((token) =>
-            fetch("/api/post", {
+            fetch("/api/post/addcomment", {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
