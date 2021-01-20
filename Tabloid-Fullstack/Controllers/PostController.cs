@@ -59,6 +59,18 @@ namespace Tabloid_Fullstack.Controllers
             _repo.Add(post);
             return Ok(post);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var existingPost = _repo.GetById(id);
+            if (existingPost == null)
+            {
+                return NotFound();
+            }
+            _repo.Delete(id);
+            return NoContent();
+        }
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
