@@ -24,5 +24,10 @@ namespace Tabloid_Fullstack.Repositories
             _context.Add(tag);
             _context.SaveChanges();
         }
+        public void Update(Tag tag)
+        {
+            _context.Entry(tag).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }
