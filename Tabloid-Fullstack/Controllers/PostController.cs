@@ -62,7 +62,7 @@ namespace Tabloid_Fullstack.Controllers
             return _repo.GetByFirebaseUserId(firebaseUserId);
         }
 
-        [HttpPost]
+        [HttpPost("addcomment/{id}")]
         public IActionResult Add(Comment comment)
         {
             var user = GetCurrentUserProfile();
