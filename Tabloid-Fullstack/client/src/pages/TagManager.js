@@ -63,7 +63,7 @@ const TagManager = () => {
                     <ListGroup>
                         {tags.map((tag) => (
                             <ListGroupItem key={tag.id}>
-                                <Tag tag={tag} />
+                                <Tag tag={tag} onEdit={getTags} />
                             </ListGroupItem>
                         ))}
                     </ListGroup>
