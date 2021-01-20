@@ -24,7 +24,6 @@ namespace Tabloid_Fullstack.Repositories
                 .Include(up => up.UserType)
                 .Include(up => up.Post)
                 .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
-
         }
 
         public void Add(UserProfile userProfile)

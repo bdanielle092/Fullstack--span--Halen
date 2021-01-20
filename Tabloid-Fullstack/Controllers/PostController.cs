@@ -20,7 +20,6 @@ namespace Tabloid_Fullstack.Controllers
             _repo = repo;
         }
 
-
         [HttpGet]
         public IActionResult Get()
         {

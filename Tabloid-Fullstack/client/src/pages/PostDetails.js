@@ -54,7 +54,13 @@ const PostDetails = () => {
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
         </div>
+        <br />
       </div>
+      <h3>Comments</h3>
+      <div><strong>Subject:</strong>  {post.comment.subject}</div>
+      <div><strong>Comment:</strong>  {post.comment.content}</div>
+      <div><strong>Author:</strong>  {post.comment.displayName}</div>
+      <div><strong>Posted:</strong>  {formatDate(post.comment.createDateTime)}</div>
     </div>
   );
 };
