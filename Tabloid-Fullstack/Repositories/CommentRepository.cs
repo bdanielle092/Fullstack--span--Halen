@@ -28,6 +28,9 @@ namespace Tabloid_Fullstack.Repositories
             })
                 .ToList(); 
         }
+        
+
+
 
 
     }

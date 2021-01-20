@@ -60,5 +60,19 @@ namespace Tabloid_Fullstack.Repositories
                 })
                 .ToList();
         }
+
+        public void Add(Comment comment)
+        {
+            _context.Add(comment);
+            _context.SaveChanges();
+        }
+
+        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        {
+            return _context.UserProfile
+                .Include(up => up.UserType)
+                .Include(up => up.Post)
+                .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
+        }
     }
 }

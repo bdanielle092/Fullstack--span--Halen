@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Tabloid_Fullstack.Models;
 using Tabloid_Fullstack.Models.ViewModels;
 using Tabloid_Fullstack.Repositories;
 
@@ -44,5 +46,34 @@ namespace Tabloid_Fullstack.Controllers
             };
             return Ok(postDetails);
         }
+
+        [HttpPost]
+        public IActionResult Post(Comment comment)
+        {
+            _repo.Add(comment);
+            return Ok();
+        }
+
+
+
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _repo.GetByFirebaseUserId(firebaseUserId);
+        }
+
+        [HttpPost]
+        public IActionResult Add(Post post)
+        {
+            var user = GetCurrentUserProfile();
+            post.UserProfileId = user.Id;
+            
+            post.CreateDateTime = DateTime.Now;
+            _repo.Add(post);
+            return Ok(post);
+        }
+
+
     }
 }
