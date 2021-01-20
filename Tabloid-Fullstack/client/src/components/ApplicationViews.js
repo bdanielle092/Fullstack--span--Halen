@@ -40,6 +40,9 @@ const ApplicationViews = () => {
       <Route path="/register">
         <Register />
       </Route>
+      <Route path="/404">
+        <h1>Not Found</h1>
+      </Route>
     </Switch>
   );
 };
