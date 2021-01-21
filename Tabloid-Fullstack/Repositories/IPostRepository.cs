@@ -11,6 +11,8 @@ namespace Tabloid_Fullstack.Repositories
         Post GetById(int id);
         List<ReactionCount> GetReactionCounts(int postId);
 
+        void Add(Comment comment);
 
+        UserProfile GetByFirebaseUserId(string firebaseUserId);
     }
 }

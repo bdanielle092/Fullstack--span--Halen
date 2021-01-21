@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,6 @@ namespace Tabloid_Fullstack.Controllers
             _userRepo = userRepo;
         }
 
-
         [HttpGet]
         public IActionResult Get()
         {
@@ -49,6 +49,30 @@ namespace Tabloid_Fullstack.Controllers
             };
             return Ok(postDetails);
         }
+
+        //[HttpPost]
+        //public IActionResult Post(Comment comment)
+        //{
+        //    _repo.Add(comment);
+        //    return Ok();
+        //}
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _repo.GetByFirebaseUserId(firebaseUserId);
+        }
+
+        [HttpPost("addcomment")]
+        public IActionResult Add(Comment comment)
+        {
+            var user = GetCurrentUserProfile();
+            comment.UserProfileId = user.Id;
+            comment.CreateDateTime = DateTime.Now;
+            _repo.Add(comment);
+            return Ok(comment);
+        }
+
         [HttpPost]
         public IActionResult Add(Post post)
         {
@@ -58,11 +82,6 @@ namespace Tabloid_Fullstack.Controllers
             post.IsApproved = true;
             _repo.Add(post);
             return Ok(post);
-        }
-        private UserProfile GetCurrentUserProfile()
-        {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userRepo.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }
