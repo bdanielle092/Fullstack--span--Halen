@@ -22,10 +22,10 @@ namespace Tabloid_Fullstack.Controllers
             _commentRepo = commentRepo;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("{postId}")]
+        public IActionResult GetById(int postId)
         {
-            var comments = _commentRepo.Get();
+            var comments = _commentRepo.GetById(postId);
             return Ok(comments);
         }
     }

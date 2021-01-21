@@ -5,7 +5,7 @@ namespace Tabloid_Fullstack.Repositories
 {
     public interface ICommentRepository
     {
-        List<Comment> Get();
+        List<Comment> GetById(int Id);
 
         
     }

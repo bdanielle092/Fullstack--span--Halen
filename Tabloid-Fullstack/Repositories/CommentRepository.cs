@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,20 +16,29 @@ namespace Tabloid_Fullstack.Repositories
             _context = context;
         }
 
-        public List<Comment> Get()
+        public List<Comment> GetById(int postId)
         {
-            return _context.Comment.Select(c => new Comment()
-            {
-                Id = c.Id,
-                PostId = c.PostId,
-                UserProfileId = c.UserProfileId,
-                Subject = c.Subject,
-                Content = c.Content,
-                CreateDateTime = c.CreateDateTime,
-            })
-                .ToList(); 
+            return _context.Comment
+                .Include(c => c.UserProfile)
+                .Select(c => new Comment()
+                {
+                    Id = c.Id,
+                    PostId = c.PostId,
+                    UserProfileId = c.UserProfileId,
+                    Subject = c.Subject,
+                    Content = c.Content,
+                    CreateDateTime = c.CreateDateTime,
+                })
+                //.Select(u => new UserProfile()
+                //{
+                //    Id = u.Id,
+                //    DisplayName = u.DisplayName,
+                //})
+                .Where(c => c.PostId == postId)
+                .ToList();
         }
         
+                //
 
 
 
