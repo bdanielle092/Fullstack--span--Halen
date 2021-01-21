@@ -50,7 +50,7 @@ namespace Tabloid_Fullstack.Controllers
             return Ok(postDetails);
         }
 
-        [HttpGet("myposts/foo/bar")]
+        [HttpGet("post/myposts")]
         public IActionResult GetMyPosts()
         {
             var user = GetCurrentUserProfile();
