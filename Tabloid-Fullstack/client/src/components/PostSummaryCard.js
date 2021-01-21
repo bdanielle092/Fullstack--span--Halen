@@ -33,6 +33,7 @@ const PostSummaryCard = ({ post }) => {
             Published on {formatDate(post.publishDateTime)}
           </p>
         </div>
+
       </div>
     </Card>
   );

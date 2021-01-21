@@ -23,7 +23,6 @@ namespace Tabloid_Fullstack.Repositories
             return _context.UserProfile
                 .Include(up => up.UserType)
                 .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
-
         }
 
         public void Add(UserProfile userProfile)
@@ -31,9 +30,5 @@ namespace Tabloid_Fullstack.Repositories
             _context.Add(userProfile);
             _context.SaveChanges();
         }
-
-
-
-
     }
 }

@@ -8,12 +8,16 @@ import {
     Button,
 } from "reactstrap";
 import Tag from "../components/Tag"
+import { Redirect } from "react-router-dom";
+
 
 
 const TagManager = () => {
     const { getToken } = useContext(UserProfileContext);
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState("");
+    const { isAdmin } = useContext(UserProfileContext);
+
 
     useEffect(() => {
         getTags();
@@ -49,39 +53,43 @@ const TagManager = () => {
             })
         );
     };
-    return (
+    if (!isAdmin()) {
+        return <Redirect to="/404" />
+    } else {
+        return (
 
-        <div className="container mt-5">
-            <img
-                height="100"
-                src="/quill.png"
-                alt="Quill Logo"
-                className="bg-danger rounded-circle"
-            />
-            <h1>Tag Management</h1>
-            <div className="row justify-content-center">
-                <div className="col-xs-12 col-sm-8 col-md-6">
-                    <ListGroup>
-                        {tags.map((tag) => (
-                            <ListGroupItem key={tag.id}>
-                                <Tag tag={tag} onEdit={getTags} onDelete={getTags} />
-                            </ListGroupItem>
-                        ))}
-                    </ListGroup>
-                    <div className="my-4">
-                        <InputGroup>
-                            <Input
-                                onChange={(e) => setNewTag(e.target.value)}
-                                value={newTag}
-                                placeholder="Add a new Tag"
-                            />
-                            <Button onClick={saveNewTag}>Save</Button>
-                        </InputGroup>
+            <div className="container mt-5">
+                <img
+                    height="100"
+                    src="/quill.png"
+                    alt="Quill Logo"
+                    className="bg-danger rounded-circle"
+                />
+                <h1>Tag Management</h1>
+                <div className="row justify-content-center">
+                    <div className="col-xs-12 col-sm-8 col-md-6">
+                        <ListGroup>
+                            {tags.map((tag) => (
+                                <ListGroupItem key={tag.id}>
+                                    <Tag tag={tag} onEdit={getTags} onDelete={getTags} />
+                                </ListGroupItem>
+                            ))}
+                        </ListGroup>
+                        <div className="my-4">
+                            <InputGroup>
+                                <Input
+                                    onChange={(e) => setNewTag(e.target.value)}
+                                    value={newTag}
+                                    placeholder="Add a new Tag"
+                                />
+                                <Button onClick={saveNewTag}>Save</Button>
+                            </InputGroup>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+        );
 
+    };
 };
 export default TagManager;

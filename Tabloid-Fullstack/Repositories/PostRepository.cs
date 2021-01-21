@@ -46,6 +46,8 @@ namespace Tabloid_Fullstack.Repositories
                 .Include(p => p.Category)
                 .Include(p => p.PostTags)
                     .ThenInclude(pt => pt.Tag)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.UserProfile)
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
         }
@@ -59,6 +61,24 @@ namespace Tabloid_Fullstack.Repositories
                     Count = r.PostReactions.Count(pr => pr.PostId == postId)
                 })
                 .ToList();
+        }
+
+
+
+
+
+        public void Add(Comment comment)
+        {
+            _context.Add(comment);
+            _context.SaveChanges();
+        }
+
+        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        {
+            return _context.UserProfile
+                .Include(up => up.UserType)
+                .Include(up => up.Post)
+                .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
         }
         public void Add(Post post)
         {
