@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Jumbotron } from "reactstrap";
@@ -8,24 +8,49 @@ import { Button } from "reactstrap"
 import PostReactions from "../components/PostReactions";
 import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
-
+import { UserProfileContext } from "../providers/UserProfileProvider";
 import { CommentCard } from "./CommentCard"
 
 
 const PostDetails = () => {
+  const { getToken } = useContext(UserProfileContext);
   const { postId } = useParams();
   const [post, setPost] = useState();
+  // const [posts, setPosts] = useState([])
   const [reactionCounts, setReactionCounts] = useState([]);
   const history = useHistory();
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/comment`)
+    fetch(`/api/comment/${postId}`)
       .then((res) => res.json())
       .then((comments) => {
         setComments(comments);
-      })
-  }, [])
+      });
+  }, []);
+
+  // const getComments = () => {
+  //   getToken().then((token) =>
+  //     fetch(`/api/comment`, {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((comments) => {
+  //         setComments(comments);
+  //       })
+  //   );
+  // };
+
+  // useEffect(() => {
+  //   fetch(`/api/post`)
+  //     .then((res) => res.json())
+  //     .then((posts) => {
+  //       setPosts(posts);
+  //     });
+  // }, []);
 
   useEffect(() => {
     fetch(`/api/post/${postId}`)
@@ -43,9 +68,6 @@ const PostDetails = () => {
   }, [postId]);
 
   if (!post) return null;
-
-
-
 
 
   return (
@@ -96,11 +118,16 @@ const PostDetails = () => {
       </Row>
 
       {
-        comments.map(comment => {
-          return <CommentCard key={comment.id} comment={comment} />
+        comments.map(comments => {
+          return <CommentCard key={comments.id} comments={comments} />
         })
       }
-
+      {/* 
+      {
+        posts.map(posts => {
+          return <CommentCard key={posts.id} posts={posts} />
+        })
+      } */}
 
     </div >
   );
