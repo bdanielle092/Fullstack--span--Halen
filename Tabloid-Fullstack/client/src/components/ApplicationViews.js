@@ -8,6 +8,7 @@ import PostDetails from "../pages/PostDetails";
 import PostForm from "./PostForm";
 import CategoryManager from "../pages/CategoryManager";
 import TagManager from "../pages/TagManager";
+import NotFoundForm from "./NotFoundForm";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -39,6 +40,9 @@ const ApplicationViews = () => {
       </Route>
       <Route path="/register">
         <Register />
+      </Route>
+      <Route path="/404">
+        <NotFoundForm />
       </Route>
     </Switch>
   );
