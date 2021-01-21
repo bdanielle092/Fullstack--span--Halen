@@ -12,7 +12,6 @@ namespace Tabloid_Fullstack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class CommentController : ControllerBase
     {
         private ICommentRepository _commentRepo;

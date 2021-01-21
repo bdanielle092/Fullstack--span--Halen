@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,12 +50,12 @@ namespace Tabloid_Fullstack.Controllers
             return Ok(postDetails);
         }
 
-        [HttpPost]
-        public IActionResult Post(Comment comment)
-        {
-            _repo.Add(comment);
-            return Ok();
-        }
+        //[HttpPost]
+        //public IActionResult Post(Comment comment)
+        //{
+        //    _repo.Add(comment);
+        //    return Ok();
+        //}
 
         private UserProfile GetCurrentUserProfile()
         {

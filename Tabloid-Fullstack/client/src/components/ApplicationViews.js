@@ -7,12 +7,10 @@ import Register from "../pages/Register";
 import PostDetails from "../pages/PostDetails";
 import PostForm from "./PostForm";
 import CategoryManager from "../pages/CategoryManager";
-<<<<<<< HEAD
+
 import CommentForm from "../pages/CommentForm";
-=======
 import TagManager from "../pages/TagManager";
 import NotFoundForm from "./NotFoundForm";
->>>>>>> main
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -28,14 +26,10 @@ const ApplicationViews = () => {
       <Route path="/explore">
         {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
       </Route>
-<<<<<<< HEAD
-      <Route path="/post/:postId(\d+)">
-=======
       <Route path="/post/add">
         {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
       </Route>
-      <Route path="/post/:postId">
->>>>>>> main
+      <Route path="/post/:postId(\d+)">
         {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
       </Route>
       <Route path="/post/addcomment/:postId(\d+)">
