@@ -64,6 +64,7 @@ namespace Tabloid_Fullstack.Repositories
 
 
 
+
         public void Add(Comment comment)
         {
             _context.Add(comment);
@@ -76,6 +77,11 @@ namespace Tabloid_Fullstack.Repositories
                 .Include(up => up.UserType)
                 .Include(up => up.Post)
                 .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
+        }
+        public void Add(Post post)
+        {
+            _context.Add(post);
+            _context.SaveChanges();
         }
     }
 }

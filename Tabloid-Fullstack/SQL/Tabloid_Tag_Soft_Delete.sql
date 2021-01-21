@@ -1,0 +1,3 @@
+﻿ALTER TABLE Tag
+ADD Active bit 
+DEFAULT (1);
