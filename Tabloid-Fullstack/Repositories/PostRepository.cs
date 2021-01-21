@@ -21,6 +21,7 @@ namespace Tabloid_Fullstack.Repositories
         public List<PostSummary> Get()
         {
             return _context.Post
+                .Where(p => p.Active)
                 .Include(p => p.Category)
                 .Where(p => p.IsApproved)
                 .Where(p => p.PublishDateTime <= DateTime.Now)
@@ -42,6 +43,7 @@ namespace Tabloid_Fullstack.Repositories
         public Post GetById(int id)
         {
             return _context.Post
+                .Where(p => p.Active)
                 .Include(p => p.UserProfile)
                 .Include(p => p.Category)
                 .Where(p => p.Id == id)
@@ -51,6 +53,7 @@ namespace Tabloid_Fullstack.Repositories
         public List<Post> GetByUserId(int id)
         {
             return _context.Post
+                .Where(p => p.Active)
                 .Include(p => p.UserProfile)
                 .Include(p => p.Category)
                 .Where(p => p.UserProfileId == id)
@@ -69,18 +72,21 @@ namespace Tabloid_Fullstack.Repositories
         }
         public void Add(Post post)
         {
+            post.Active = true;
             _context.Add(post);
             _context.SaveChanges();
         }
         public void Delete(int id)
         {
             var post = GetById(id);
-            _context.Post.Remove(post);
+            post.Active = false;
+            _context.Entry(post).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
         public void Update(Post post)
         {
+            post.Active = true;
             _context.Entry(post).State = EntityState.Modified;
             _context.SaveChanges();
         }

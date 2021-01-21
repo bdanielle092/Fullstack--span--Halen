@@ -6,13 +6,12 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PostDetails from "../pages/PostDetails";
 import PostForm from "./PostForm";
+import MyPosts from "./MyPosts";
 import CategoryManager from "../pages/CategoryManager";
 import TagManager from "../pages/TagManager";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
-  const { isAdmin } = useContext(UserProfileContext);
-
   return (
     <Switch>
       <Route path="/" exact>
@@ -21,7 +20,7 @@ const ApplicationViews = () => {
       <Route path="/explore">
         {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
       </Route>
-      <Route path="/mypots">
+      <Route path="/post/myposts/foo/bar">
         {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
       </Route>
       <Route path="/post/add">

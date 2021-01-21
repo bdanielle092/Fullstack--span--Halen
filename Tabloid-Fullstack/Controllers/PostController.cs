@@ -50,7 +50,7 @@ namespace Tabloid_Fullstack.Controllers
             return Ok(postDetails);
         }
 
-        [HttpPost("myposts")]
+        [HttpGet("myposts/foo/bar")]
         public IActionResult GetMyPosts()
         {
             var user = GetCurrentUserProfile();
@@ -79,7 +79,7 @@ namespace Tabloid_Fullstack.Controllers
                 return NotFound();
             }
 
-            if(existingPost.UserProfileId != user.Id  || user.UserTypeId != 1)
+            if (existingPost.UserProfileId != user.Id || user.UserTypeId != 1)
             {
                 return Unauthorized();
             }
@@ -111,7 +111,7 @@ namespace Tabloid_Fullstack.Controllers
             existingPost.CategoryId = post.CategoryId;
             existingPost.PublishDateTime = post.PublishDateTime;
 
-            _repo.Update(post);
+            _repo.Update(existingPost);
             return NoContent();
         }
         private UserProfile GetCurrentUserProfile()

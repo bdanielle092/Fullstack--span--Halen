@@ -78,6 +78,7 @@ const PostForm = () => {
                 <Label for="content">Content</Label>
                 <Input
                   id="content"
+                  type="textarea"
                   useRef={postContent}
                   onChange={(e) => setContent(e.target.value)}
                 />
