@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import {
   ListGroup,
   ListGroupItem,
@@ -56,6 +57,7 @@ const CategoryManager = () => {
   if (!isAdmin()) {
     return <Redirect to="/404" />
   } else {
+
     return (
       <div className="container mt-5">
         <img
@@ -88,7 +90,10 @@ const CategoryManager = () => {
         </div>
       </div>
     );
-  };
+
 };
+
+}
+
 
 export default CategoryManager;
