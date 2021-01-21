@@ -9,12 +9,14 @@ import {
 } from "reactstrap";
 import Category from "../components/Category";
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import { Redirect } from "react-router-dom";
 
 const CategoryManager = () => {
   const { getToken } = useContext(UserProfileContext);
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
   const { getCurrentUser, isAdmin } = useContext(UserProfileContext);
+
 
   useEffect(() => {
     getCategories();
@@ -55,7 +57,7 @@ const CategoryManager = () => {
   if (!isAdmin()) {
     return <Redirect to="/404" />
   } else {
-    debugger
+
     return (
       <div className="container mt-5">
         <img
@@ -88,7 +90,10 @@ const CategoryManager = () => {
         </div>
       </div>
     );
-  };
+
+};
+
 }
+
 
 export default CategoryManager;

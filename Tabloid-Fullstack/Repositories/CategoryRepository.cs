@@ -30,7 +30,8 @@ namespace Tabloid_Fullstack.Repositories
 
         public Category GetById(int id)
         {
-            return _context.Category.FirstOrDefault(c => c.Id == id);
+            return _context.Category
+                .FirstOrDefault(c => c.Id == id);
         }
 
         public void Add(Category category)
