@@ -42,7 +42,7 @@ const ApplicationViews = () => {
         <Register />
       </Route>
       <Route path="/404">
-        <NotFoundForm />
+        <h1>Not Found</h1>
       </Route>
     </Switch>
   );
