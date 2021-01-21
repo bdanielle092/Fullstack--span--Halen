@@ -49,6 +49,15 @@ namespace Tabloid_Fullstack.Controllers
             };
             return Ok(postDetails);
         }
+
+        [HttpPost("myposts")]
+        public IActionResult GetMyPosts()
+        {
+            var user = GetCurrentUserProfile();
+            var myPosts = _repo.GetByUserId(user.Id);
+            return Ok(myPosts);
+        }
+
         [HttpPost]
         public IActionResult Add(Post post)
         {
@@ -60,15 +69,49 @@ namespace Tabloid_Fullstack.Controllers
             return Ok(post);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("myposts/{id}")]
         public IActionResult Delete(int id)
         {
+            var user = GetCurrentUserProfile();
             var existingPost = _repo.GetById(id);
             if (existingPost == null)
             {
                 return NotFound();
             }
+
+            if(existingPost.UserProfileId != user.Id  || user.UserTypeId != 1)
+            {
+                return Unauthorized();
+            }
             _repo.Delete(id);
+            return NoContent();
+        }
+
+        [HttpPut("myposts/{id}")]
+        public IActionResult Update(int id, Post post)
+        {
+            if (id != post.Id)
+            {
+                return BadRequest();
+            }
+            var existingPost = _repo.GetById(id);
+            var user = GetCurrentUserProfile();
+
+            if (existingPost == null)
+            {
+                return NotFound();
+            }
+            if (existingPost.UserProfileId != user.Id || user.UserTypeId != 1)
+            {
+                return Unauthorized();
+            }
+
+            existingPost.Title = post.Title;
+            existingPost.Content = post.Content;
+            existingPost.CategoryId = post.CategoryId;
+            existingPost.PublishDateTime = post.PublishDateTime;
+
+            _repo.Update(post);
             return NoContent();
         }
         private UserProfile GetCurrentUserProfile()

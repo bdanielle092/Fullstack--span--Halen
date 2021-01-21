@@ -51,14 +51,6 @@ const PostDetails = () => {
           </div>
         </div>
         <div className="text-justify post-details__content">{post.content}</div>
-        <Button
-          color="danger"
-          // onClick={() => {
-          //   history.push(`/posts/delete${postId}`);
-          // }}
-        >
-          Delete
-        </Button>
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
         </div>

@@ -13,7 +13,6 @@ const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
   const { isAdmin } = useContext(UserProfileContext);
 
-
   return (
     <Switch>
       <Route path="/" exact>
@@ -21,6 +20,9 @@ const ApplicationViews = () => {
       </Route>
       <Route path="/explore">
         {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
+      </Route>
+      <Route path="/mypots">
+        {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
       </Route>
       <Route path="/post/add">
         {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
