@@ -31,9 +31,5 @@ namespace Tabloid_Fullstack.Repositories
             _context.Add(userProfile);
             _context.SaveChanges();
         }
-
-
-
-
     }
 }

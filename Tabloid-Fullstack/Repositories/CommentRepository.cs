@@ -20,28 +20,8 @@ namespace Tabloid_Fullstack.Repositories
         {
             return _context.Comment
                 .Include(c => c.UserProfile)
-                .Select(c => new Comment()
-                {
-                    Id = c.Id,
-                    PostId = c.PostId,
-                    UserProfileId = c.UserProfileId,
-                    Subject = c.Subject,
-                    Content = c.Content,
-                    CreateDateTime = c.CreateDateTime,
-                })
-                //.Select(u => new UserProfile()
-                //{
-                //    Id = u.Id,
-                //    DisplayName = u.DisplayName,
-                //})
                 .Where(c => c.PostId == postId)
                 .ToList();
         }
-        
-                //
-
-
-
-
     }
 }
