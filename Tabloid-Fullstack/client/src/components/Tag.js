@@ -87,7 +87,7 @@ const Tag = ({ tag, onEdit, onDelete }) => {
             <Modal isOpen={pendingDelete}>
                 <ModalHeader>Delete {tag.name}?</ModalHeader>
                 <ModalBody>
-                    Are you sure you want to delete {tag.name} tag? This action cannot be
+                    Are you sure you want to delete <strong>{tag.name}</strong> tag? This action cannot be
           undone.
         </ModalBody>
                 <ModalFooter>

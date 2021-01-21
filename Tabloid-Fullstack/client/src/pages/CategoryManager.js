@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
 import {
   ListGroup,
   ListGroupItem,
@@ -91,7 +90,7 @@ const CategoryManager = () => {
       </div>
     );
 
-};
+  };
 
 }
 
