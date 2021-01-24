@@ -20,7 +20,7 @@ const ApplicationViews = () => {
       <Route path="/explore">
         {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
       </Route>
-      <Route path="/post/myposts/foo/bar">
+      <Route path="/myposts">
         {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
       </Route>
       <Route path="/post/add">

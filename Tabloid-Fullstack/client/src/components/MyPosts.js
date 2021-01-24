@@ -4,12 +4,11 @@ import {
   Card,
   CardBody,
   Button,
-  CardTitle,
-  CardSubtitle,
   Modal,
   ModalHeader,
   ModalFooter,
   ModalBody,
+  CardImg,
 } from "reactstrap";
 
 import { UserProfileContext } from "../providers/UserProfileProvider";
@@ -22,7 +21,7 @@ const MyPosts = () => {
   const history = useHistory();
 
   const getMyPosts = (token) => {
-    return fetch(`/api/post/myposts/foo/bar`, {
+    return fetch(`/api/post/myposts`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -55,6 +54,16 @@ const MyPosts = () => {
         return (
           <Card>
             <CardBody>
+              <div className="col-lg-3 col-sm-12">
+                <Link to={`/post/${post.id}`}>
+                  <div
+                    className="myPost__img"
+                    style={{
+                      backgroundImage: `url(${post.imageLocation})`,
+                    }}
+                  ></div>
+                </Link>
+              </div>
               <h3>
                 <Link to={`/post/${post.id}`}>{post.title}</Link>
               </h3>

@@ -50,8 +50,9 @@ namespace Tabloid_Fullstack.Controllers
             return Ok(postDetails);
         }
 
-        [HttpGet("post/myposts")]
+        [HttpGet("myposts")]
         public IActionResult GetMyPosts()
+
         {
             var user = GetCurrentUserProfile();
             var myPosts = _repo.GetByUserId(user.Id);
@@ -79,7 +80,7 @@ namespace Tabloid_Fullstack.Controllers
                 return NotFound();
             }
 
-            if (existingPost.UserProfileId != user.Id || user.UserTypeId != 1)
+            if (existingPost.UserProfileId != user.Id && user.UserTypeId != 1)
             {
                 return Unauthorized();
             }
