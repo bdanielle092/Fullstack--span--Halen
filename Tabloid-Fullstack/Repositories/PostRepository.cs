@@ -57,6 +57,17 @@ namespace Tabloid_Fullstack.Repositories
                 .Include(p => p.UserProfile)
                 .Include(p => p.Category)
                 .Where(p => p.UserProfileId == id)
+                .OrderByDescending(p => p.PublishDateTime)
+                //.Select(p => new Post()
+                //{
+                //    Id = p.Id,
+                //    ImageLocation = p.ImageLocation,
+                //    Title = p.Title,
+                //    AuthorId = p.UserProfileId,
+                //    AuthorName = p.UserProfile.DisplayName,
+                //    PublishDateTime = p.PublishDateTime,
+                //    Category = p.Category
+                //})
                 .ToList();
         }
 

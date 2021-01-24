@@ -57,7 +57,7 @@ const MyPosts = () => {
               <div className="col-lg-3 col-sm-12">
                 <Link to={`/post/${post.id}`}>
                   <div
-                    className="myPost__img"
+                    className="post-summary__img"
                     style={{
                       backgroundImage: `url(${post.imageLocation})`,
                     }}
@@ -68,6 +68,7 @@ const MyPosts = () => {
                 <Link to={`/post/${post.id}`}>{post.title}</Link>
               </h3>
               <h5>{post.category.name}</h5>
+              <p className="ml-5 text-info">Written by {post.authorName}</p>
               <p>{post.publishDateTime}</p>
               <p>{post.content}</p>
               <Button
