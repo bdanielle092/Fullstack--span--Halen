@@ -1,5 +1,5 @@
 import { UserProfileContext } from "../providers/UserProfileProvider";
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import { Button, Col, Card, CardBody, Form, FormGroup, Label, Input, Row } from "reactstrap"
 
@@ -9,6 +9,20 @@ export const CommentForm = () => {
     const [content, setContent] = useState("");
     const { getToken } = useContext(UserProfileContext);
     const history = useHistory();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const submit = () => {
         const comment = {
@@ -34,7 +48,7 @@ export const CommentForm = () => {
         <div className="container pt-4">
             <div className="row justify-content-center">
                 <Card className="col-sm-12 col-lg-6">
-                    <h1>Add a New Comment</h1>
+                    <h1>{Add a New Comment</h1>
                     <CardBody>
                         <Form>
                             <FormGroup>

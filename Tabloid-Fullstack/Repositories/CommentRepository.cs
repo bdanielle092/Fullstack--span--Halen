@@ -16,7 +16,7 @@ namespace Tabloid_Fullstack.Repositories
             _context = context;
         }
 
-        public List<Comment> GetById(int postId)
+    public List<Comment> GetById(int postId)
         {
             return _context.Comment
                 .Include(c => c.UserProfile)

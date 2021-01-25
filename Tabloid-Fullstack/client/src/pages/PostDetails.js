@@ -11,12 +11,10 @@ import "./PostDetails.css";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { CommentCard } from "./CommentCard"
 
-
 const PostDetails = () => {
   const { getToken } = useContext(UserProfileContext);
   const { postId } = useParams();
   const [post, setPost] = useState();
-  // const [posts, setPosts] = useState([])
   const [reactionCounts, setReactionCounts] = useState([]);
   const history = useHistory();
   const [comments, setComments] = useState([]);
@@ -28,29 +26,6 @@ const PostDetails = () => {
         setComments(comments);
       });
   }, []);
-
-  // const getComments = () => {
-  //   getToken().then((token) =>
-  //     fetch(`/api/comment`, {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((comments) => {
-  //         setComments(comments);
-  //       })
-  //   );
-  // };
-
-  // useEffect(() => {
-  //   fetch(`/api/post`)
-  //     .then((res) => res.json())
-  //     .then((posts) => {
-  //       setPosts(posts);
-  //     });
-  // }, []);
 
   useEffect(() => {
     fetch(`/api/post/${postId}`)
@@ -68,7 +43,6 @@ const PostDetails = () => {
   }, [postId]);
 
   if (!post) return null;
-
 
   return (
     <div>
@@ -109,26 +83,17 @@ const PostDetails = () => {
             onClick={() => {
               history.push(`/post/addcomment/${postId}`)
             }}
-
           >Add New Comment
-          </Button>
+            </Button>
         </Col>
         <Col>
         </Col>
       </Row>
-
       {
         comments.map(comments => {
           return <CommentCard key={comments.id} comments={comments} />
         })
       }
-      {/* 
-      {
-        posts.map(posts => {
-          return <CommentCard key={posts.id} posts={posts} />
-        })
-      } */}
-
     </div >
   );
 };

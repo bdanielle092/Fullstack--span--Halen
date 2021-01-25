@@ -7,7 +7,6 @@ import Register from "../pages/Register";
 import PostDetails from "../pages/PostDetails";
 import PostForm from "./PostForm";
 import CategoryManager from "../pages/CategoryManager";
-
 import CommentForm from "../pages/CommentForm";
 import TagManager from "../pages/TagManager";
 import NotFoundForm from "./NotFoundForm";
@@ -15,8 +14,6 @@ import NotFoundForm from "./NotFoundForm";
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
   const { isAdmin } = useContext(UserProfileContext);
-
-
 
   return (
     <Switch>
