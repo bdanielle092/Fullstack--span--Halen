@@ -8,6 +8,8 @@ import {
 } from "reactstrap";
 import Category from "../components/Category";
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import { Redirect } from "react-router-dom";
+
 
 
 const CategoryManager = () => {
