@@ -37,6 +37,7 @@ namespace Tabloid_Fullstack.Controllers
             return CreatedAtAction(
                 nameof(GetUserProfile),
                 new { firebaseUserId = userProfile.FirebaseUserId },
+
                 userProfile);
         }
     }
