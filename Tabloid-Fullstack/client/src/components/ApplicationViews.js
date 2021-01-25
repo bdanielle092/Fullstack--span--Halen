@@ -8,10 +8,15 @@ import PostDetails from "../pages/PostDetails";
 import PostForm from "./PostForm";
 import MyPosts from "./MyPosts";
 import CategoryManager from "../pages/CategoryManager";
+
+import CommentForm from "../pages/CommentForm";
 import TagManager from "../pages/TagManager";
+import NotFoundForm from "./NotFoundForm";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
+  const { isAdmin } = useContext(UserProfileContext);
+
   return (
     <Switch>
       <Route path="/" exact>
@@ -26,8 +31,11 @@ const ApplicationViews = () => {
       <Route path="/post/add">
         {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
       </Route>
-      <Route path="/post/:postId">
+      <Route path="/post/:postId(\d+)">
         {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
+      </Route>
+      <Route path="/post/addcomment/:postId(\d+)">
+        {isLoggedIn ? <CommentForm /> : <Redirect to="/login" />}
       </Route>
       <Route path="/categories">
         {isLoggedIn ? <CategoryManager /> : <Redirect to="/login" />}
