@@ -13,17 +13,6 @@ export const CommentForm = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     const submit = () => {
         const comment = {
             subject,
@@ -48,7 +37,7 @@ export const CommentForm = () => {
         <div className="container pt-4">
             <div className="row justify-content-center">
                 <Card className="col-sm-12 col-lg-6">
-                    <h1>{Add a New Comment</h1>
+                    <h1>Add a New Comment</h1>
                     <CardBody>
                         <Form>
                             <FormGroup>
