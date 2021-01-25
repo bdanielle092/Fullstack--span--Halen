@@ -8,7 +8,6 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  CardImg,
 } from "reactstrap";
 
 import { UserProfileContext } from "../providers/UserProfileProvider";
@@ -20,6 +19,12 @@ const MyPosts = () => {
 
   const history = useHistory();
 
+  useEffect(() => {
+    getToken().then((token) => {
+      return getMyPosts(token);
+    });
+  }, []);
+
   const getMyPosts = (token) => {
     return fetch(`/api/post/myposts`, {
       method: "GET",
@@ -28,12 +33,6 @@ const MyPosts = () => {
       },
     }).then((res) => res.json().then((p) => setPosts(p)));
   };
-
-  useEffect(() => {
-    getToken().then((token) => {
-      return getMyPosts(token);
-    });
-  }, []);
 
   const deletePost = (id) => {
     getToken()
@@ -54,7 +53,7 @@ const MyPosts = () => {
         return (
           <Card>
             <CardBody>
-              <div className="col-lg-3 col-sm-12">
+              {/* <div className="col-lg-3 col-sm-12">
                 <Link to={`/post/${post.id}`}>
                   <div
                     className="post-summary__img"
@@ -63,7 +62,7 @@ const MyPosts = () => {
                     }}
                   ></div>
                 </Link>
-              </div>
+              </div> */}
               <h3>
                 <Link to={`/post/${post.id}`}>{post.title}</Link>
               </h3>
