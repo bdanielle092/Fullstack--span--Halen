@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Jumbotron } from "reactstrap";
+import { Jumbotron, Input } from "reactstrap";
 import { Row } from "reactstrap";
 import { Col } from "reactstrap";
 import { Button } from "reactstrap"
@@ -10,10 +10,14 @@ import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { CommentCard } from "./CommentCard"
+import PostTag from "../components/PostTag"
+import userEvent from "@testing-library/user-event";
 
 
 const PostDetails = () => {
+  const { getCurrentUser, isAdmin } = useContext(UserProfileContext);
   const { getToken } = useContext(UserProfileContext);
+  const user = getCurrentUser();
   const { postId } = useParams();
   const [post, setPost] = useState();
   const [posts, setPosts] = useState([])
@@ -21,6 +25,12 @@ const PostDetails = () => {
   const history = useHistory();
   const [comments, setComments] = useState([]);
   const [tags, setTags] = useState([]);
+  const [tagId, setTagId] = useState("");
+  const [tagsList, setTagsList] = useState([]);
+
+
+
+  const currentUser = getCurrentUser();
 
   useEffect(() => {
     fetch(`/api/comment/${postId}`)
@@ -71,6 +81,64 @@ const PostDetails = () => {
 
   if (!post) return null;
 
+  const getTags = () => {
+    getToken().then((token) =>
+      fetch(`/api/tag`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((tags) => {
+          setTagsList(tags);
+        })
+    );
+  };
+  //Dropdown of all tags NOT already assigned to post
+  const PostTags = (_) => {
+    const tagsOnPost = tags.map((tag) => tag.tag);
+    return tags.filter((tag) => {
+      return !tagsOnPost.find((t) => t.id === tag.id)
+    });
+  };
+  //Check if current user is author of post 
+  const verifyUser = (_) => {
+    if (user.id === post.userProfileId) {
+      return true;
+    }
+    return false;
+  }
+  //Save for selected tag
+  const handleChange = (e) => {
+    setTagId(e.target.value);
+  }
+  const savePostTag = (token) => {
+    return fetch(`/api/posttag`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ tagId: tagId, postId: postId }),
+    });
+  };
+  //Delete a tag
+  const deleteTag = (tag) => {
+    return getToken().then((token) => {
+      fetch(`/api/posttag/${tag.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((_) => {
+          getTags();
+        })
+    })
+  }
+
 
   return (
     <div>
@@ -97,10 +165,47 @@ const PostDetails = () => {
         <div className="text-justify post-details__content">{post.content}</div>
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
-          Tags: {tags.map((tag) => `${tag.tag.name} `)}
+          {/* Tags: {tags.map((tag) => `${tag.tag.name} `)} */}
         </div>
-        <br />
 
+        {verifyUser() || isAdmin() ? (
+          <>
+            <Input type="select" onChange={(e) => handleChange(e)}>
+              <option value="0">Select a tag..</option>
+              {PostTags().map((tag) => (
+                <option value={tag.id} key={tag.id}>
+                  {" "}
+                  {tag.name}{" "}
+                </option>
+              ))}
+            </Input>
+            <Button
+              onClick={(e) => {
+                getToken().then(savePostTag).then(getTags);
+              }}
+            >
+              Save Tag
+            </Button>{" "}
+          </>
+        ) : (
+            ""
+          )}
+        <div>
+          Tags:{" "}
+          {verifyUser() || isAdmin()
+            ? tags.map((tag) => {
+              return (
+                <>
+                  <Link
+                    onClick={(e) => deleteTag(tag).then(getTags)}
+                  >
+                    {tag.tag.name}
+                  </Link>{" "}
+                </>
+              );
+            })
+            : tags.map((tag) => `${tag.tag.name} `)}
+        </div>
       </div>
 
       <Row className="mt-5 ml-2">

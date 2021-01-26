@@ -62,11 +62,6 @@ namespace Tabloid_Fullstack.Repositories
                 })
                 .ToList();
         }
-
-
-
-
-
         public void Add(Comment comment)
         {
             _context.Add(comment);
@@ -85,6 +80,10 @@ namespace Tabloid_Fullstack.Repositories
             _context.Add(post);
             _context.SaveChanges();
         }
-        
+        public void Add(PostTag postTag)
+        {
+            _context.Add(postTag);
+            _context.SaveChanges();
+        }
     }
 }

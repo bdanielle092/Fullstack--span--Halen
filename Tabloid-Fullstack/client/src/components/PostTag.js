@@ -1,15 +1,12 @@
 import React from "react";
 import { Badge } from "reactstrap";
 
-const PostTags = ({ postTags }) => {
+const PostTag = ({ postTag }) => {
     return (
         <div className="float-left">
-            {postTags.map((postTag) => (
-                <div key={postTag.id} className="d-inline-block mx-2">
-                    {postTag.name}
-                </div>
-            ))}
+
+            {postTag.name}
         </div>
     );
 };
-export default PostTags;
+export default PostTag;
