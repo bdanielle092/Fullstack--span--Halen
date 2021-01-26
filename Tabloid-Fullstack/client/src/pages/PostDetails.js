@@ -138,6 +138,7 @@ const PostDetails = () => {
         })
     })
   }
+  //useEffect
 
 
   return (
