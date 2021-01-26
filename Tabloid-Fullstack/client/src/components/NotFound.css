@@ -1,0 +1,13 @@
+.photo {
+    display: block;
+    border: 0;
+    height: auto;
+}
+
+.centerPhoto {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 60%;
+}

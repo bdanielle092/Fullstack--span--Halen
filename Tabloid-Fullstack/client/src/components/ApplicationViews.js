@@ -7,7 +7,6 @@ import Register from "../pages/Register";
 import PostDetails from "../pages/PostDetails";
 import PostForm from "./PostForm";
 import CategoryManager from "../pages/CategoryManager";
-
 import CommentForm from "../pages/CommentForm";
 import TagManager from "../pages/TagManager";
 import NotFoundForm from "./NotFoundForm";
@@ -48,8 +47,9 @@ const ApplicationViews = () => {
         <Register />
       </Route>
       <Route path="/404">
-        <h1>Not Found</h1>
+        <NotFoundForm />
       </Route>
+
     </Switch>
   );
 };
