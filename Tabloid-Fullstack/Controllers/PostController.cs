@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Tabloid_Fullstack.Models;
 using Tabloid_Fullstack.Models.ViewModels;
 using Tabloid_Fullstack.Repositories;
@@ -15,7 +11,6 @@ namespace Tabloid_Fullstack.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-
         private readonly IPostRepository _repo;
         private readonly IUserProfileRepository _userRepo;
 
@@ -49,13 +44,6 @@ namespace Tabloid_Fullstack.Controllers
             };
             return Ok(postDetails);
         }
-
-        //[HttpPost]
-        //public IActionResult Post(Comment comment)
-        //{
-        //    _repo.Add(comment);
-        //    return Ok();
-        //}
 
         private UserProfile GetCurrentUserProfile()
         {
