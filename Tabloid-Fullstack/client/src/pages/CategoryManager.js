@@ -21,7 +21,9 @@ const CategoryManager = () => {
     useEffect(() => {
       getCategories();
     }, []);
-
+  }
+  if (getCurrentUser === !isAdmin) {
+    return (null)
   }
 
 
