@@ -9,6 +9,7 @@ import PostForm from "./PostForm";
 import CategoryManager from "../pages/CategoryManager";
 import CommentForm from "../pages/CommentForm";
 import TagManager from "../pages/TagManager";
+import NotFoundForm from "./NotFoundForm";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
