@@ -363,3 +363,4 @@ FodyWeavers.xsd
 
 appsettings.Local.json
 client/.eslintcache
+*.env.local 
