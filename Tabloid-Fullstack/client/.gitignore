@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.env.local
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -361,6 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-client/.eslintcache
 appsettings.Local.json
-*.env.local
+.eslintcache
