@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Jumbotron } from "reactstrap";
 import { Row } from "reactstrap";
@@ -10,18 +10,17 @@ import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { CommentCard } from "./CommentCard"
-// import PostTags from "../components/PostTag";
 
 
 const PostDetails = () => {
   const { getToken } = useContext(UserProfileContext);
   const { postId } = useParams();
   const [post, setPost] = useState();
-  // const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([])
   const [reactionCounts, setReactionCounts] = useState([]);
   const history = useHistory();
   const [comments, setComments] = useState([]);
-  // const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     fetch(`/api/comment/${postId}`)
@@ -66,7 +65,7 @@ const PostDetails = () => {
       .then((data) => {
         setPost(data.post);
         setReactionCounts(data.reactionCounts);
-        // setTags(data.postTags);
+        setTags(data.post.postTags);
       });
   }, [postId]);
 
@@ -98,9 +97,10 @@ const PostDetails = () => {
         <div className="text-justify post-details__content">{post.content}</div>
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
-          {/* <PostTags postTags={tags} /> */}
+          Tags: {tags.map((tag) => `${tag.tag.name} `)}
         </div>
         <br />
+
       </div>
 
       <Row className="mt-5 ml-2">
