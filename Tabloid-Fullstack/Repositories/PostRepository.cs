@@ -67,6 +67,7 @@ namespace Tabloid_Fullstack.Repositories
 
         public void Add(Comment comment)
         {
+            comment.Active = true;
             _context.Add(comment);
             _context.SaveChanges();
         }

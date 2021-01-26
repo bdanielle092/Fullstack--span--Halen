@@ -17,5 +17,7 @@ namespace Tabloid_Fullstack.Models
         public DateTime CreateDateTime { get; set; }
 
         public UserProfile UserProfile { get; set; }
+
+        public bool Active { get; set; }
     }
 }

@@ -9,7 +9,7 @@ import PostReactions from "../components/PostReactions";
 import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
 import { UserProfileContext } from "../providers/UserProfileProvider";
-import { CommentCard } from "./CommentCard"
+import { CommentCard } from "./CommentCard";
 
 const PostDetails = () => {
   const { getToken } = useContext(UserProfileContext);
@@ -17,15 +17,22 @@ const PostDetails = () => {
   const [post, setPost] = useState();
   const [reactionCounts, setReactionCounts] = useState([]);
   const history = useHistory();
-  const [comments, setComments] = useState([]);
+  const [comment, setComments] = useState([]);
+
+
 
   useEffect(() => {
     fetch(`/api/comment/${postId}`)
       .then((res) => res.json())
-      .then((comments) => {
-        setComments(comments);
+      .then((comment) => {
+        setComments(comment);
       });
   }, []);
+
+  const removeComment = (id) => {
+    const filteredComments = comment.filter(c => c.id !== id);
+    setComments(filteredComments);
+  }
 
   useEffect(() => {
     fetch(`/api/post/${postId}`)
@@ -90,8 +97,8 @@ const PostDetails = () => {
         </Col>
       </Row>
       {
-        comments.map(comments => {
-          return <CommentCard key={comments.id} comments={comments} />
+        comment.map(comment => {
+          return <CommentCard key={comment.id} comment={comment} removeComment={removeComment} />
         })
       }
     </div >
