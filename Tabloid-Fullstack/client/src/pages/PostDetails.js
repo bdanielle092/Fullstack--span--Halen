@@ -165,7 +165,6 @@ const PostDetails = () => {
         <div className="text-justify post-details__content">{post.content}</div>
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
-          {/* Tags: {tags.map((tag) => `${tag.tag.name} `)} */}
         </div>
 
         {verifyUser() || isAdmin() ? (
@@ -174,8 +173,7 @@ const PostDetails = () => {
               <option value="0">Select a tag..</option>
               {PostTags().map((tag) => (
                 <option value={tag.id} key={tag.id}>
-                  {" "}
-                  {tag.name}{" "}
+                  {tag.name}
                 </option>
               ))}
             </Input>
