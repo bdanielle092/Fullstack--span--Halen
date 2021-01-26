@@ -85,7 +85,7 @@ namespace Tabloid_Fullstack.Controllers
             post.CreateDateTime = DateTime.Now;
             post.IsApproved = true;
             _repo.Add(post);
-            return Ok(post);
+            return CreatedAtAction("Get", new { id = post.Id }, post);
         }
 
         [HttpDelete("myposts/{id}")]
@@ -93,11 +93,6 @@ namespace Tabloid_Fullstack.Controllers
         {
             var user = GetCurrentUserProfile();
             var existingPost = _repo.GetById(id);
-            if (existingPost == null)
-            {
-                return NotFound();
-            }
-
             if (existingPost.UserProfileId != user.Id && user.UserTypeId != 1)
             {
                 return Unauthorized();

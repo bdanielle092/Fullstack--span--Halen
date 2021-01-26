@@ -51,36 +51,29 @@ const MyPosts = () => {
     <div className="container pt-4">
       {posts.map((post) => {
         return (
-          <Card>
-            <CardBody>
-              {/* <div className="col-lg-3 col-sm-12">
-                <Link to={`/post/${post.id}`}>
-                  <div
-                    className="post-summary__img"
-                    style={{
-                      backgroundImage: `url(${post.imageLocation})`,
-                    }}
-                  ></div>
-                </Link>
-              </div> */}
-              <h3>
-                <Link to={`/post/${post.id}`}>{post.title}</Link>
-              </h3>
-              <h5>{post.category.name}</h5>
-              <p className="ml-5 text-info">Written by {post.authorName}</p>
-              <p>{post.publishDateTime}</p>
-              <p>{post.content}</p>
-              <Button
-                color="danger"
-                onClick={(e) => history.push(`/post/edit/${post.id}`)}
-              >
-                Edit
-              </Button>
-              <Button color="danger" onClick={(e) => setPendingDelete(true)}>
-                Delete
-              </Button>
-            </CardBody>
-            <Modal isOpen={pendingDelete}>
+          <>
+            <Card>
+              <CardBody>
+                <h3>
+                  <Link to={`/post/${post.id}`}>{post.title}</Link>
+                </h3>
+                <h5>{post.category.name}</h5>
+                <p className="ml-5 text-info">Written by {post.authorName}</p>
+                <Button
+                  color="danger"
+                  onClick={(e) => history.push(`/post/edit/${post.id}`)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  color="danger"
+                  onClick={(e) => setPendingDelete(post.id)}
+                >
+                  Delete
+                </Button>
+              </CardBody>
+            </Card>
+            <Modal isOpen={pendingDelete === post.id}>
               <ModalHeader>Delete {post.title}?</ModalHeader>
               <ModalBody>
                 Are you sure you want to delete this post? This action cannot be
@@ -98,7 +91,7 @@ const MyPosts = () => {
                 </Button>
               </ModalFooter>
             </Modal>
-          </Card>
+          </>
         );
       })}
     </div>

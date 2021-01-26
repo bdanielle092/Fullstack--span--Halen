@@ -52,7 +52,7 @@ namespace Tabloid_Fullstack.Repositories
                 .FirstOrDefault();
         }
 
-        public List<MyPost> GetByUserId(int id)
+        public List<Post> GetByUserId(int id)
         {
             return _context.Post
                 .Where(p => p.Active)
@@ -60,16 +60,6 @@ namespace Tabloid_Fullstack.Repositories
                 .Include(p => p.Category)
                 .Where(p => p.UserProfileId == id)
                 .OrderByDescending(p => p.PublishDateTime)
-                .Select(p => new MyPost()
-                {
-                    Id = p.Id,
-                    ImageLocation = p.ImageLocation,
-                    Title = p.Title,
-                    AuthorId = p.UserProfileId,
-                    AuthorName = p.UserProfile.DisplayName,
-                    PublishDateTime = p.PublishDateTime,
-                    Category = p.Category
-                })
                 .ToList();
         }
 
