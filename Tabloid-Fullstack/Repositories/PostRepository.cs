@@ -17,7 +17,7 @@ namespace Tabloid_Fullstack.Repositories
         {
             _context = context;
         }
-
+      
         public List<PostSummary> Get()
         {
             return _context.Post

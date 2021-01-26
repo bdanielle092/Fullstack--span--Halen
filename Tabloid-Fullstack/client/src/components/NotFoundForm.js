@@ -1,17 +1,23 @@
 import React from "react";
-import Explore from "../pages/Explore";
+import { Link } from "react-router-dom";
+import notFound from "../image/404-error-page-not-found.jpg";
+import "./NotFound.css";
+import { Button } from "reactstrap";
 
 const NotFoundForm = () => {
 
     return (
-        <div className="card">
-            <div className="card-content">
-                <picture>
-                    <img src="../image/404-error-page-not-found.jpg" alt="404 image" />
-                </picture>
-                <link to="../pages/Explore.js">
-                    <h1>Go Home</h1>
-                </link>
+        <div >
+            <div>
+                <img className="photo" src={notFound} alt="404 image" className="centerPhoto" />
+                <br></br>
+
+                <Link to="/explore">
+                    <Button color="danger">
+                        Go To Explore
+                    </Button>
+                </Link>
+
             </div>
         </div>
 
