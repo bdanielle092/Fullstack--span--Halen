@@ -27,41 +27,23 @@ const PostDetails = () => {
   const [tags, setTags] = useState([]);
   const [tagId, setTagId] = useState("");
   const [tagsList, setTagsList] = useState([]);
-
-
-
   const currentUser = getCurrentUser();
+  const [reactionCounts, setReactionCounts] = useState([]);
+  const history = useHistory();
+  const [comment, setComments] = useState([]);
 
   useEffect(() => {
     fetch(`/api/comment/${postId}`)
       .then((res) => res.json())
-      .then((comments) => {
-        setComments(comments);
+      .then((comment) => {
+        setComments(comment);
       });
   }, []);
 
-  // const getComments = () => {
-  //   getToken().then((token) =>
-  //     fetch(`/api/comment`, {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((comments) => {
-  //         setComments(comments);
-  //       })
-  //   );
-  // };
-
-  // useEffect(() => {
-  //   fetch(`/api/post`)
-  //     .then((res) => res.json())
-  //     .then((posts) => {
-  //       setPosts(posts);
-  //     });
-  // }, []);
+  const removeComment = (id) => {
+    const filteredComments = comment.filter(c => c.id !== id);
+    setComments(filteredComments);
+  }
 
   useEffect(() => {
     fetch(`/api/post/${postId}`)
@@ -218,26 +200,17 @@ const PostDetails = () => {
             onClick={() => {
               history.push(`/post/addcomment/${postId}`)
             }}
-
           >Add New Comment
-          </Button>
+            </Button>
         </Col>
         <Col>
         </Col>
       </Row>
-
       {
-        comments.map(comments => {
-          return <CommentCard key={comments.id} comments={comments} />
+        comment.map(comment => {
+          return <CommentCard key={comment.id} comment={comment} removeComment={removeComment} />
         })
       }
-      {/* 
-      {
-        posts.map(posts => {
-          return <CommentCard key={posts.id} posts={posts} />
-        })
-      } */}
-
     </div >
   );
 };

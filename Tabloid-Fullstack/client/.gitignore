@@ -390,4 +390,8 @@ MigrationBackup/
 FodyWeavers.xsd
 
 appsettings.Local.json
+<<<<<<< HEAD
 .eslintcache
+=======
+.eslintcache
+>>>>>>> main

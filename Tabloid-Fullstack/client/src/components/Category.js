@@ -19,7 +19,7 @@ const Category = ({ category, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(false);
   const [categoryEdits, setCategoryEdits] = useState("");
-  const { getCurrentUser, isAdmin } = useContext(UserProfileContext);
+  const { isAdmin } = useContext(UserProfileContext);
 
 
   const showEditForm = () => {
