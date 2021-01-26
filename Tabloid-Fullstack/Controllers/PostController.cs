@@ -83,19 +83,7 @@ namespace Tabloid_Fullstack.Controllers
             _repo.Add(post);
             return Ok(post);
         }
-        [HttpPost("addTag")]
-        public IActionResult Add(PostTag postTag)
-        {
-            var currentUser = GetCurrentUserProfile();
-            var postUserId = _repo.GetById(postTag.PostId);
+       
 
-            if (currentUser.Id != postUserId.UserProfileId)
-            {
-                return NotFound();
-            }
-
-            _repo.Add(postTag);
-            return NoContent();            
-        }
     }
 }

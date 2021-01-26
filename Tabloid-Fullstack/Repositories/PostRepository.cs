@@ -80,7 +80,7 @@ namespace Tabloid_Fullstack.Repositories
             _context.Add(post);
             _context.SaveChanges();
         }
-        public void Add(PostTag postTag)
+        public void AddPostTag(PostTag postTag)
         {
             _context.Add(postTag);
             _context.SaveChanges();

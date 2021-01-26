@@ -13,7 +13,7 @@ namespace Tabloid_Fullstack.Repositories
 
         void Add(Comment comment);
         void AddPostTag(PostTag postTag);
-        void RemovePostTag(PostTag postTag);
+        //void RemovePostTag(PostTag postTag);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
     }
 }
