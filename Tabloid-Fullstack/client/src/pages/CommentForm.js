@@ -30,31 +30,6 @@ export const CommentForm = () => {
         );
     };
 
-    const editComment = () => {
-        const comment = {
-            subject,
-            content,
-            postId: postId
-        };
-        getToken().then((token) =>
-            fetch("/api/post/addcomment", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(comment),
-            }).then((p) => {
-                history.push(`/post/${postId}`);
-            })
-        );
-    };
-
-
-
-
-
-
     return (
         <div className="container pt-4">
             <div className="row justify-content-center">

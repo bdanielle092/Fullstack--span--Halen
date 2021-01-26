@@ -22,7 +22,7 @@ export const CommentCard = ({ comment, removeComment }) => {
         )
     }
 
-    const DeleteButton = () => {
+    const DeleteComment = () => {
         const user = getCurrentUser()
         if (user.id === comment.userProfileId) {
             return <Button
@@ -40,18 +40,37 @@ export const CommentCard = ({ comment, removeComment }) => {
         }
     }
 
+    const EditButton = () => {
+        const user = getCurrentUser()
+        if (user.id === comment.userProfileId) {
+            return <Button
+                className="mt-5  mr-3"
+                style={{ width: 150, height: 75 }}
+                color="info"
+
+            >Edit Comment
+                    </Button>
+        }
+        else {
+            return null;
+        }
+    }
+
     return <>
         <Col>
             <Row >
-                <Col md={7} className="text-left mt-5">
+                <Col></Col>
+                <Col md={5} className="text-left mt-5">
                     <div className="mt-2"><strong className="font-weight-bold">Subject:</strong>&nbsp; {comment.subject} </div>
                     <div className="mt-2"><strong className="font-weight-bold">Comment:</strong>&nbsp;   {comment.content}</div>
                     <div className="mt-2"><strong className="font-weight-bold">Author:</strong>&nbsp; {comment.userProfile.displayName}</div>
                     <div className="mt-2"> <strong className="font-weight-bold">Posted:</strong>&nbsp;  {formatDate(comment.createDateTime)} </div>
                 </Col>
                 <Col>
-                    <DeleteButton />
+                    <EditButton />
+                    <DeleteComment />
                 </Col>
+                <Col></Col>
             </Row>
         </Col>
     </>
