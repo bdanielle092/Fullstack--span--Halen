@@ -102,15 +102,15 @@ export function UserProfileProvider(props) {
         logout,
         register,
         getToken,
-        getCurrentUser,
         isAdmin,
+        getCurrentUser
       }}
     >
       {isFirebaseReady ? (
         props.children
       ) : (
-        <Spinner className="app-spinner dark" />
-      )}
+          <Spinner className="app-spinner dark" />
+        )}
     </UserProfileContext.Provider>
   );
 }

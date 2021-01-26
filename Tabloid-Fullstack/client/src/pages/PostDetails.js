@@ -19,8 +19,6 @@ const PostDetails = () => {
   const history = useHistory();
   const [comment, setComments] = useState([]);
 
-
-
   useEffect(() => {
     fetch(`/api/comment/${postId}`)
       .then((res) => res.json())

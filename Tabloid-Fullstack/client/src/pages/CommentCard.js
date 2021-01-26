@@ -4,7 +4,8 @@ import formatDate from "../utils/dateFormatter";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
 export const CommentCard = ({ comment, removeComment }) => {
-    const { getToken } = useContext(UserProfileContext);
+    const { getToken, getCurrentUser } = useContext(UserProfileContext);
+
 
     const deleteComment = () => {
         const deletingComment = { id: comment.id }
@@ -22,6 +23,25 @@ export const CommentCard = ({ comment, removeComment }) => {
         )
     }
 
+    const DeleteButton = () => {
+        const user = getCurrentUser()
+        if (user.id === comment.userProfileId) {
+            return <Button
+                className="mt-5"
+                style={{ width: 150, height: 75 }}
+                color="danger"
+                onClick={() => {
+                    deleteComment(comment.id)
+                }}
+            >Delete Comment
+                    </Button>
+        }
+        else {
+            return null;
+        }
+    }
+
+
     return <>
         <Col>
             <Row >
@@ -32,15 +52,7 @@ export const CommentCard = ({ comment, removeComment }) => {
                     <div className="mt-2"> <strong className="font-weight-bold">Posted:</strong>&nbsp;  {formatDate(comment.createDateTime)} </div>
                 </Col>
                 <Col>
-                    <Button
-                        className="mt-5"
-                        style={{ width: 150, height: 75 }}
-                        color="danger"
-                        onClick={() => {
-                            deleteComment(comment.id)
-                        }}
-                    >Delete Comment
-                </Button>
+                    <DeleteButton />
                 </Col>
             </Row>
         </Col>

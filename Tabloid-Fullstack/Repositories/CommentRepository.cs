@@ -25,9 +25,12 @@ namespace Tabloid_Fullstack.Repositories
                 .ToList();
         }
 
+
+
         public Comment GetCommentById(int id)
         {
-            return _context.Comment.FirstOrDefault(c => c.Id == id);
+            return _context.Comment
+                .FirstOrDefault(c => c.Id == id);
         }
         public void Delete(int id)
         {
