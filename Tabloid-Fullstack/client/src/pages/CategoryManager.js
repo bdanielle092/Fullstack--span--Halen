@@ -17,13 +17,13 @@ const CategoryManager = () => {
   const [newCategory, setNewCategory] = useState("");
   const { getCurrentUser, isAdmin } = useContext(UserProfileContext);
 
-  if (!isAdmin) {
-
-  } else {
+  if (getCurrentUser === isAdmin) {
     useEffect(() => {
       getCategories();
     }, []);
+
   }
+
 
   const getCategories = () => {
     getToken().then((token) =>

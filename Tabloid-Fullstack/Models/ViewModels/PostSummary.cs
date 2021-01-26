@@ -19,5 +19,8 @@ namespace Tabloid_Fullstack.Models.ViewModels
         public DateTime? PublishDateTime { get; set; }
         public string PreviewText => AbbreviatedText + "...";
         public Category Category { get; set; }
+
+        //[JsonIgnore]
+        //public int EstimatedReadtTime { get { wordCount/60} }
     }
 }
