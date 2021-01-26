@@ -21,6 +21,6 @@ namespace Tabloid_Fullstack.Models.ViewModels
         public Category Category { get; set; }
 
         //[JsonIgnore]
-        //public int EstimatedReadtTime { get { wordCount/60} }
+        //public int EstimatedReadtTime { get; set{ wordCount/60}; }
     }
 }
