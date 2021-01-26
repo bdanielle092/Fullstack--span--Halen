@@ -1,10 +1,21 @@
-import React, { useContext } from "react";
-import { Col, Row, Button } from "reactstrap";
+import React, { useContext, useState } from "react";
+import {
+    Col, Row, Button,
+    ButtonGroup,
+    Form,
+    Input,
+    InputGroup,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+} from "reactstrap";
 import formatDate from "../utils/dateFormatter";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
 export const CommentCard = ({ comment, removeComment }) => {
     const { getToken, getCurrentUser } = useContext(UserProfileContext);
+    const [pendingDelete, setPendingDelete] = useState(false);
 
     const deleteComment = () => {
         const deletingComment = { id: comment.id }
@@ -26,11 +37,10 @@ export const CommentCard = ({ comment, removeComment }) => {
         const user = getCurrentUser()
         if (user.id === comment.userProfileId) {
             return <Button
-                className="mt-5"
-                style={{ width: 150, height: 75 }}
+                className="mt-5 mr-3 px-1"
                 color="danger"
                 onClick={() => {
-                    deleteComment(comment.id)
+                    setPendingDelete(true)
                 }}
             >Delete Comment
                     </Button>
@@ -44,8 +54,7 @@ export const CommentCard = ({ comment, removeComment }) => {
         const user = getCurrentUser()
         if (user.id === comment.userProfileId) {
             return <Button
-                className="mt-5  mr-3"
-                style={{ width: 150, height: 75 }}
+                className="mt-5  mr-3 px-1"
                 color="info"
 
             >Edit Comment
@@ -60,7 +69,7 @@ export const CommentCard = ({ comment, removeComment }) => {
         <Col>
             <Row >
                 <Col></Col>
-                <Col md={5} className="text-left mt-5">
+                <Col md={3} className="text-left mt-5">
                     <div className="mt-2"><strong className="font-weight-bold">Subject:</strong>&nbsp; {comment.subject} </div>
                     <div className="mt-2"><strong className="font-weight-bold">Comment:</strong>&nbsp;   {comment.content}</div>
                     <div className="mt-2"><strong className="font-weight-bold">Author:</strong>&nbsp; {comment.userProfile.displayName}</div>
@@ -73,5 +82,18 @@ export const CommentCard = ({ comment, removeComment }) => {
                 <Col></Col>
             </Row>
         </Col>
+
+        {/* DELETE CONFIRM MODAL */}
+        <Modal isOpen={pendingDelete}>
+            <ModalHeader>Delete {comment.subject}?</ModalHeader>
+            <ModalBody>
+                Are you sure you want to delete this category? This action cannot be
+                undone.
+        </ModalBody>
+            <ModalFooter>
+                <Button onClick={(e) => setPendingDelete(false)}>No, Cancel</Button>
+                <Button className="btn btn-outline-danger" onClick={deleteComment}>Yes, Delete</Button>
+            </ModalFooter>
+        </Modal>
     </>
 }

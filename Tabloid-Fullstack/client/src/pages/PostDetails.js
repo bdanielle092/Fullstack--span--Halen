@@ -85,7 +85,6 @@ const PostDetails = () => {
       <Row className="mt-3">
         <Col className="ml-4">
           <Button color="success"
-            style={{ width: 150, height: 75 }}
             onClick={() => {
               history.push(`/post/addcomment/${postId}`)
             }}
