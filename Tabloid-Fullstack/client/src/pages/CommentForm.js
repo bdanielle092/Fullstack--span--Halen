@@ -10,7 +10,7 @@ export const CommentForm = () => {
     const { getToken } = useContext(UserProfileContext);
     const history = useHistory();
 
-    const submit = () => {
+    const createComment = () => {
         const comment = {
             subject,
             content,
@@ -60,7 +60,7 @@ export const CommentForm = () => {
                                 color="success"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    submit();
+                                    createComment();
                                 }}
                             >
                                 SUBMIT

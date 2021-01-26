@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tabloid_Fullstack.Models
 {
@@ -17,5 +16,7 @@ namespace Tabloid_Fullstack.Models
         public DateTime CreateDateTime { get; set; }
 
         public UserProfile UserProfile { get; set; }
+
+        public bool Active { get; set; }
     }
 }
