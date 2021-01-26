@@ -35,7 +35,6 @@ namespace Tabloid_Fullstack.Repositories
                     AbbreviatedText = p.Content.Substring(0, 200),
                     PublishDateTime = p.PublishDateTime,
                     Category = p.Category
-                    //wordcount = Regex.Matches(+/s)
                 })
                 .ToList();
         }
