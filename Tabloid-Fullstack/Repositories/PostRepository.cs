@@ -35,7 +35,10 @@ namespace Tabloid_Fullstack.Repositories
                     AbbreviatedText = p.Content.Substring(0, 200),
                     PublishDateTime = p.PublishDateTime,
                     Category = p.Category
+<<<<<<< HEAD
                     //wordcount = Regex.Matches(/ w */ s *)
+=======
+>>>>>>> main
                 })
                 .ToList();
         }
@@ -68,6 +71,7 @@ namespace Tabloid_Fullstack.Repositories
 
         public void Add(Comment comment)
         {
+            comment.Active = true;
             _context.Add(comment);
             _context.SaveChanges();
         }
