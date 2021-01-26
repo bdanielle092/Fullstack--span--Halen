@@ -13,9 +13,6 @@ import NotFoundForm from "./NotFoundForm";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
-  const { isAdmin } = useContext(UserProfileContext);
-
-
 
   return (
     <Switch>
