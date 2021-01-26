@@ -1,5 +1,5 @@
 import { UserProfileContext } from "../providers/UserProfileProvider";
-import React, { useState, useContext, useEffect } from "react"
+import React, { useState, useContext } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import { Button, Col, Card, CardBody, Form, FormGroup, Label, Input, Row } from "reactstrap"
 
@@ -10,11 +10,7 @@ export const CommentForm = () => {
     const { getToken } = useContext(UserProfileContext);
     const history = useHistory();
 
-
-
-
-
-    const submit = () => {
+    const createComment = () => {
         const comment = {
             subject,
             content,
@@ -33,6 +29,31 @@ export const CommentForm = () => {
             })
         );
     };
+
+    const editComment = () => {
+        const comment = {
+            subject,
+            content,
+            postId: postId
+        };
+        getToken().then((token) =>
+            fetch("/api/post/addcomment", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(comment),
+            }).then((p) => {
+                history.push(`/post/${postId}`);
+            })
+        );
+    };
+
+
+
+
+
 
     return (
         <div className="container pt-4">
@@ -64,7 +85,7 @@ export const CommentForm = () => {
                                 color="success"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    submit();
+                                    createComment();
                                 }}
                             >
                                 SUBMIT

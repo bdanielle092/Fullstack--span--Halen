@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Tabloid_Fullstack.Data;
 using Tabloid_Fullstack.Models;
 
@@ -24,8 +22,6 @@ namespace Tabloid_Fullstack.Repositories
                 .Where(c => c.Active == true)
                 .ToList();
         }
-
-
 
         public Comment GetCommentById(int id)
         {

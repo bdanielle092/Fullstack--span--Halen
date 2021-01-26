@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Tabloid_Fullstack.Models;
 using Tabloid_Fullstack.Repositories;
 
 namespace Tabloid_Fullstack.Controllers
@@ -15,7 +13,6 @@ namespace Tabloid_Fullstack.Controllers
         {
             _commentRepo = commentRepo;
         }
-       
 
         [HttpGet("{postId}")]
         public IActionResult GetById(int postId)

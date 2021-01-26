@@ -6,7 +6,6 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 export const CommentCard = ({ comment, removeComment }) => {
     const { getToken, getCurrentUser } = useContext(UserProfileContext);
 
-
     const deleteComment = () => {
         const deletingComment = { id: comment.id }
         getToken().then((token) =>
@@ -40,7 +39,6 @@ export const CommentCard = ({ comment, removeComment }) => {
             return null;
         }
     }
-
 
     return <>
         <Col>
