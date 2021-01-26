@@ -10,6 +10,7 @@ import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { CommentCard } from "./CommentCard"
+// import PostTags from "../components/PostTag";
 
 
 const PostDetails = () => {
@@ -20,6 +21,7 @@ const PostDetails = () => {
   const [reactionCounts, setReactionCounts] = useState([]);
   const history = useHistory();
   const [comments, setComments] = useState([]);
+  // const [tags, setTags] = useState([]);
 
   useEffect(() => {
     fetch(`/api/comment/${postId}`)
@@ -64,6 +66,7 @@ const PostDetails = () => {
       .then((data) => {
         setPost(data.post);
         setReactionCounts(data.reactionCounts);
+        // setTags(data.postTags);
       });
   }, [postId]);
 
@@ -95,9 +98,11 @@ const PostDetails = () => {
         <div className="text-justify post-details__content">{post.content}</div>
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
+          {/* <PostTags postTags={tags} /> */}
         </div>
         <br />
       </div>
+
       <Row className="mt-5 ml-2">
         <Col>
           <h3>Comments</h3>
