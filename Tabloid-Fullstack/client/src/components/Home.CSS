@@ -1,7 +1,12 @@
-.photo {
+.homePhoto {
     display: block;
-    border: 2px;
+    border: 0;
     height: auto;
+}
+
+.home {
+    margin-top: 40px;
+    color: mediumseagreen;
 }
 
 .centerPhoto {
