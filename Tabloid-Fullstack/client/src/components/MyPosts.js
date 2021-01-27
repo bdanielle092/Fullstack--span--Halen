@@ -58,7 +58,7 @@ const MyPosts = () => {
                   <Link to={`/post/${post.id}`}>{post.title}</Link>
                 </h3>
                 <h5>{post.category.name}</h5>
-                <p className="ml-5 text-info">Written by {post.authorName}</p>
+                <p>Written by {post.userProfile.displayName}</p>
                 <Button
                   color="danger"
                   onClick={(e) => history.push(`/post/edit/${post.id}`)}

@@ -50,13 +50,6 @@ namespace Tabloid_Fullstack.Controllers
             return Ok(postDetails);
         }
 
-        //[HttpPost]
-        //public IActionResult Post(Comment comment)
-        //{
-        //    _repo.Add(comment);
-        //    return Ok();
-        //}
-
         [HttpPost("addcomment")]
         public IActionResult Add(Comment comment)
         {
