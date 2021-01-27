@@ -70,7 +70,7 @@ const PostDetails = () => {
         setReactionCounts(data.reactionCounts);
         setTags(data.post.postTags);
       });
-  }, [postId]);
+  }, [postId, tagsList]);
 
   if (!post) return null;
 
@@ -166,7 +166,7 @@ const PostDetails = () => {
             </Input>
             <Button
               onClick={(e) => {
-                getToken().then(savePostTag).then(history.push(`/post/${post.id}`));
+                getToken().then(savePostTag).then(getTags);
               }}
             >
               Save Tag
