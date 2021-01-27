@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Tabloid_Fullstack.Data;
 using Tabloid_Fullstack.Models;
@@ -20,6 +21,8 @@ namespace Tabloid_Fullstack.Repositories
 
         public List<PostSummary> Get()
         {
+            // regex = new regex
+            var regex = new Regex(@"\w*\s*");
             return _context.Post
                 .Where(p => p.Active)
                 .Include(p => p.Category)
@@ -35,7 +38,11 @@ namespace Tabloid_Fullstack.Repositories
                     AuthorName = p.UserProfile.DisplayName,
                     AbbreviatedText = p.Content.Substring(0, 200),
                     PublishDateTime = p.PublishDateTime,
-                    Category = p.Category
+                    Category = p.Category,
+                    //content = p.Content is getting the post content
+                    Content = p.Content,
+                    //wordCount = the regex.matches is removing the space from the post content and then the ,count is counting the number of words in the content 
+                    wordCount = regex.Matches(p.Content).Count
                 })
                 .ToList();
         }
