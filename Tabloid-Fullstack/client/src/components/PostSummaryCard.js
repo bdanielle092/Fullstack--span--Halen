@@ -5,6 +5,7 @@ import formatDate from "../utils/dateFormatter";
 import "./PostSummaryCard.css";
 
 const PostSummaryCard = ({ post }) => {
+  console.log(post)
   return (
     <Card className="post-summary__card">
       <div className="row">
@@ -24,6 +25,10 @@ const PostSummaryCard = ({ post }) => {
               <h2>{post.title}</h2>
             </Link>
             <strong className="text-danger">{post.category.name}</strong>
+            <p>
+              Read Time: {post.estimatedReadTime}
+              {post.estimatedReadTime == 1 ? " Minute" : " Minutes"}
+            </p>
           </div>
           <p className="text-justify mx-5">{post.previewText}</p>
         </div>

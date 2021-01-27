@@ -29,5 +29,14 @@ namespace Tabloid_Fullstack.Models
         public List<PostReaction> PostReactions { get; set; }
 
         public List<Comment> Comments { get; set; }
+
+        //public double calculateReadTime()
+        //{
+        //    double time = 0;
+        //    double test = Content.Split(" ").Length;
+        //    time = test / 265;
+        //    time = Math.Ceiling(time);
+        //    return time;
+        //}
     }
 }

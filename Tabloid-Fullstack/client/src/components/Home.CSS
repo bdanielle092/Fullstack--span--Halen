@@ -1,14 +1,8 @@
 .photo {
     display: block;
-    border: 0;
+    border: 2px;
     height: auto;
 }
-
-
-/* .homephoto {
-    border: 5px #555;
-    height: auto;
-} */
 
 .centerPhoto {
     display: block;
