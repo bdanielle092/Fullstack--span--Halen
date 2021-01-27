@@ -14,7 +14,9 @@ namespace Tabloid_Fullstack.Repositories
         List<ReactionCount> GetReactionCounts(int postId);
 
         void Add(Comment comment);
-
+        void AddPostTag(PostTag postTag);
+        void RemovePostTag(PostTag postTag);
+        PostTag GetPostTagById(int id);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         void Update(Post post);
     }
