@@ -12,6 +12,7 @@ import CategoryManager from "../pages/CategoryManager";
 import CommentForm from "../pages/CommentForm";
 import TagManager from "../pages/TagManager";
 import NotFoundForm from "./NotFoundForm";
+import HomeForm from "./HomeForm";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -19,7 +20,7 @@ const ApplicationViews = () => {
   return (
     <Switch>
       <Route path="/" exact>
-        {isLoggedIn ? <p>Home</p> : <Redirect to="/login" />}
+        {isLoggedIn ? <HomeForm /> : <Redirect to="/login" />}
       </Route>
       <Route path="/explore">
         {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
