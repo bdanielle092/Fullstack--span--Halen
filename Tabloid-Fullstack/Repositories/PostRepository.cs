@@ -103,6 +103,8 @@ namespace Tabloid_Fullstack.Repositories
         public void RemovePostTag(PostTag postTag)
         {
             _context.Remove(postTag);
+            _context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public PostTag GetPostTagById(int id)
