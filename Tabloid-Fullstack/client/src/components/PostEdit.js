@@ -1,23 +1,26 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { UserProfileContext } from "../providers/UserProfileProvider";
 import {
-  Form,
-  FormGroup,
   Card,
   CardBody,
+  Button,
+  Form,
+  FormGroup,
   Label,
   Input,
-  Button,
 } from "reactstrap";
-import { UserProfileContext } from "../providers/UserProfileProvider";
 
-const PostForm = () => {
-  const [post, setPost] = useState([]);
+const PostEdit = (props) => {
   const { getToken } = useContext(UserProfileContext);
-  const [categories, setCategories] = useState([]);
-
-  // Use this hook to allow us to programatically redirect users
+  const { id } = useParams();
   const history = useHistory();
+  const [postToEdit, setPostToEdit] = useState({
+    title: "",
+    content: "",
+    categoryId: "",
+  });
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     getToken()
@@ -30,28 +33,41 @@ const PostForm = () => {
         })
       )
       .then((res) => res.json())
-      .then((cat) => setCategories(cat));
+      .then((cat) => setCategories(cat))
+      .then((_) => {
+        getToken()
+          .then((token) =>
+            fetch(`/api/post/${id}`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+          )
+          .then((res) => res.json())
+          .then((edit) => setPostToEdit(edit.post));
+      });
   }, []);
 
   const handleSubmit = (e) => {
-    const newPost = { ...post };
+    const newPost = { ...postToEdit };
     newPost[e.target.name] = e.target.value;
-    setPost(newPost);
+    setPostToEdit(newPost);
   };
 
-  const addPost = (post) => {
+  const updatePost = (post) => {
     getToken()
       .then((token) =>
-        fetch("/api/post", {
-          method: "POST",
+        fetch(`/api/post/myposts/${post.id}`, {
+          method: "PUT",
           headers: {
-            "Content-Type": "application/JSON",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(post),
         })
       )
-      .then(() => history.push(`/myposts`));
+      .then((e) => history.push("/myposts"));
   };
 
   return (
@@ -60,7 +76,7 @@ const PostForm = () => {
         <Card className="col-sm-12 col-lg-6">
           <CardBody>
             <Form>
-              <FormGroup>
+              {/* <FormGroup>
                 <Label for="imageLocation">Header Image URL</Label>
                 <Input
                   id="imageLocation"
@@ -68,13 +84,14 @@ const PostForm = () => {
                   name="ImageLocation"
                   onChange={(e) => handleSubmit(e)}
                 />
-              </FormGroup>
+              </FormGroup> */}
               <FormGroup>
                 <Label for="title">Title</Label>
                 <Input
                   id="title"
                   type="title"
-                  name="Title"
+                  name="title"
+                  value={postToEdit.title}
                   onChange={(e) => handleSubmit(e)}
                 />
               </FormGroup>
@@ -83,7 +100,8 @@ const PostForm = () => {
                 <Input
                   id="content"
                   type="textarea"
-                  name="Content"
+                  name="content"
+                  value={postToEdit.content}
                   onChange={(e) => handleSubmit(e)}
                 />
               </FormGroup>
@@ -91,8 +109,9 @@ const PostForm = () => {
                 <Label for="selectCategory">Category</Label>
                 <Input
                   type="select"
-                  name="CategoryId"
+                  name="categoryId"
                   id="category"
+                  value={postToEdit.categoryId}
                   onChange={(e) => handleSubmit(e)}
                 >
                   <option>Select Category ...</option>
@@ -112,21 +131,20 @@ const PostForm = () => {
                   onChange={(e) => handleSubmit(e)}
                 />
               </FormGroup>
+              <Button
+                color="danger"
+                onClick={(e) => {
+                  e.preventDefault();
+                  updatePost(postToEdit);
+                }}
+              >
+                SUBMIT
+              </Button>
             </Form>
-            <Button
-              color="danger"
-              onClick={(e) => {
-                e.preventDefault();
-                addPost(post);
-              }}
-            >
-              SUBMIT POST
-            </Button>
           </CardBody>
         </Card>
       </div>
     </div>
   );
 };
-
-export default PostForm;
+export default PostEdit;
