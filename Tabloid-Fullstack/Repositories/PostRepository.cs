@@ -17,7 +17,7 @@ namespace Tabloid_Fullstack.Repositories
         {
             _context = context;
         }
-      
+
         public List<PostSummary> Get()
         {
             return _context.Post
@@ -35,10 +35,7 @@ namespace Tabloid_Fullstack.Repositories
                     AbbreviatedText = p.Content.Substring(0, 200),
                     PublishDateTime = p.PublishDateTime,
                     Category = p.Category
-<<<<<<< HEAD
                     //wordcount = Regex.Matches(/ w */ s *)
-=======
->>>>>>> main
                 })
                 .ToList();
         }
