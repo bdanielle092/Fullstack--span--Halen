@@ -151,7 +151,7 @@ const PostDetails = () => {
         </div>
         <br />
         <br />
-        {verifyUser() || isAdmin() ? (
+        {verifyUser() ? (
           <>
             {/* Check if user is admin to see the dropdown of tags */}
 
@@ -180,7 +180,7 @@ const PostDetails = () => {
         <div>
           Tags:{" "}
           {/* Check if user is admin to delete tag */}
-          {verifyUser() || isAdmin()
+          {verifyUser()
             ? tags.map((tag) => {
               return (
                 <>
