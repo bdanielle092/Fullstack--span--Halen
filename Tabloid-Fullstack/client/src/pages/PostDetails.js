@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Jumbotron, Input } from "reactstrap";
+import { Jumbotron, Input, CardBody } from "reactstrap";
 import { Row } from "reactstrap";
 import { Col } from "reactstrap";
 import { Button } from "reactstrap"
@@ -10,8 +10,8 @@ import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { CommentCard } from "./CommentCard"
-import PostTag from "../components/PostTag"
 import userEvent from "@testing-library/user-event";
+
 
 
 const PostDetails = () => {
@@ -41,24 +41,6 @@ const PostDetails = () => {
     setComments(filteredComments);
   }
 
-  useEffect(() => {
-    fetch(`/api/post/${postId}`)
-      .then((res) => {
-        if (res.status === 404) {
-          toast.error("This isn't the post you're looking for");
-          return;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setPost(data.post);
-        setReactionCounts(data.reactionCounts);
-        setTags(data.post.postTags);
-      });
-  }, [postId]);
-
-  if (!post) return null;
-
   const getTags = () => {
     getToken().then((token) =>
       fetch(`/api/tag`, {
@@ -73,13 +55,33 @@ const PostDetails = () => {
         })
     );
   };
+  useEffect(() => {
+    fetch(`/api/post/${postId}`)
+      .then((res) => {
+        if (res.status === 404) {
+          toast.error("This isn't the post you're looking for");
+          return;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        getTags();
+        setPost(data.post);
+        setReactionCounts(data.reactionCounts);
+        setTags(data.post.postTags);
+      });
+  }, [postId]);
+
+  if (!post) return null;
+
 
   //Dropdown of all tags NOT already assigned to post
   const PostTags = (_) => {
     const tagsOnPost = tags.map((tag) => tag.tag);
-    return tags.filter((tag) => {
+    return tagsList.filter((tag) => {
       return !tagsOnPost.find((t) => t.id === tag.id)
     });
+
   };
   //Check if current user is author of post 
   const verifyUser = (_) => {
@@ -100,6 +102,7 @@ const PostDetails = () => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ tagId: tagId, postId: postId }),
+
     });
   };
   //Delete a tag
@@ -114,10 +117,9 @@ const PostDetails = () => {
         })
         .then((_) => {
           getTags();
-        }).then(() => { history.push(`/api/post/${post.id}`) })
+        })
     })
   }
-  //useEffect
 
 
   return (
@@ -143,6 +145,7 @@ const PostDetails = () => {
           </div>
         </div>
         <div className="text-justify post-details__content">{post.content}</div>
+
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
         </div>
@@ -150,6 +153,8 @@ const PostDetails = () => {
         <br />
         {verifyUser() || isAdmin() ? (
           <>
+            {/* Check if user is admin to see the dropdown of tags */}
+
             <Input type="select" onChange={(e) => handleChange(e)}>
               <option value="0">Select a tag..</option>
               {PostTags().map((tag) => (
@@ -161,29 +166,32 @@ const PostDetails = () => {
             </Input>
             <Button
               onClick={(e) => {
-                getToken().then(savePostTag).then(getTags);
+                getToken().then(savePostTag).then(history.push(`/post/${post.id}`));
               }}
             >
               Save Tag
             </Button>{" "}
           </>
+          //If not admin, return nothing
         ) : (
             ""
           )}
         <div>
           Tags:{" "}
+          {/* Check if user is admin to delete tag */}
           {verifyUser() || isAdmin()
             ? tags.map((tag) => {
               return (
                 <>
-                  <Link
+                  <Button
                     onClick={(e) => deleteTag(tag).then(getTags)}
                   >
                     {tag.tag.name}
-                  </Link>{" "}
+                  </Button>{" "}
                 </>
               );
             })
+            // If user is not admin
             : tags.map((tag) => `${tag.tag.name} `)}
         </div>
       </div>
