@@ -362,5 +362,9 @@ MigrationBackup/
 FodyWeavers.xsd
 
 client/.eslintcache
+<<<<<<< HEAD
+*.env.local 
+=======
 appsettings.Local.json
 *.env.local
+>>>>>>> main

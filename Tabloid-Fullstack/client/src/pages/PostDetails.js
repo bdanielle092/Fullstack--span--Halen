@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Jumbotron } from "reactstrap";
+import { Jumbotron, Input, CardBody } from "reactstrap";
 import { Row } from "reactstrap";
 import { Col } from "reactstrap";
 import { Button } from "reactstrap"
@@ -9,14 +9,22 @@ import PostReactions from "../components/PostReactions";
 import formatDate from "../utils/dateFormatter";
 import "./PostDetails.css";
 import { UserProfileContext } from "../providers/UserProfileProvider";
-import { CommentCard } from "./CommentCard";
+import { CommentCard } from "./CommentCard"
+import userEvent from "@testing-library/user-event";
+
+
 
 const PostDetails = () => {
+  const { getCurrentUser, isAdmin } = useContext(UserProfileContext);
   const { getToken } = useContext(UserProfileContext);
+  const user = getCurrentUser();
   const { postId } = useParams();
   const [post, setPost] = useState();
   const [reactionCounts, setReactionCounts] = useState([]);
   const history = useHistory();
+  const [tags, setTags] = useState([]);
+  const [tagId, setTagId] = useState("");
+  const [tagsList, setTagsList] = useState([]);
   const [comment, setComments] = useState([]);
 
   useEffect(() => {
@@ -27,11 +35,26 @@ const PostDetails = () => {
       });
   }, []);
 
+
   const removeComment = (id) => {
     const filteredComments = comment.filter(c => c.id !== id);
     setComments(filteredComments);
   }
 
+  const getTags = () => {
+    getToken().then((token) =>
+      fetch(`/api/tag`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((tags) => {
+          setTagsList(tags);
+        })
+    );
+  };
   useEffect(() => {
     fetch(`/api/post/${postId}`)
       .then((res) => {
@@ -42,12 +65,62 @@ const PostDetails = () => {
         return res.json();
       })
       .then((data) => {
+        getTags();
         setPost(data.post);
         setReactionCounts(data.reactionCounts);
+        setTags(data.post.postTags);
       });
-  }, [postId]);
+  }, [postId, tagsList]);
 
   if (!post) return null;
+
+
+  //Dropdown of all tags NOT already assigned to post
+  const PostTags = (_) => {
+    const tagsOnPost = tags.map((tag) => tag.tag);
+    return tagsList.filter((tag) => {
+      return !tagsOnPost.find((t) => t.id === tag.id)
+    });
+
+  };
+  //Check if current user is author of post 
+  const verifyUser = (_) => {
+    if (user.id === post.userProfileId) {
+      return true;
+    }
+    return false;
+  }
+  //Save for selected tag
+  const handleChange = (e) => {
+    setTagId(e.target.value);
+  }
+  const savePostTag = (token) => {
+    return fetch(`/api/posttag`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ tagId: tagId, postId: postId }),
+
+    });
+  };
+  //Delete a tag
+  const deleteTag = (tag) => {
+    return getToken().then((token) => {
+      fetch(`/api/posttag/${tag.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((_) => {
+          getTags();
+        })
+    })
+  }
+
 
   return (
     <div>
@@ -72,11 +145,58 @@ const PostDetails = () => {
           </div>
         </div>
         <div className="text-justify post-details__content">{post.content}</div>
+
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
         </div>
         <br />
+        <br />
+        {verifyUser() ? (
+          <>
+            {/* Check if user is admin to see the dropdown of tags */}
+
+            <Input type="select" onChange={(e) => handleChange(e)}>
+              <option value="0">Select a tag..</option>
+              {PostTags().map((tag) => (
+                <option value={tag.id} key={tag.id}>
+                  {" "}
+                  {tag.name}{" "}
+                </option>
+              ))}
+            </Input>
+            <br />
+            <Button
+              onClick={(e) => {
+                getToken().then(savePostTag).then(getTags);
+              }}
+            >
+              Save Tag
+            </Button>{" "}
+          </>
+          //If not admin, return nothing
+        ) : (
+            ""
+          )}
+        <div>
+          Tags:{" "}
+          {/* Check if user is admin to delete tag */}
+          {verifyUser()
+            ? tags.map((tag) => {
+              return (
+                <>
+                  <Button
+                    onClick={(e) => deleteTag(tag).then(getTags)}
+                  >
+                    {tag.tag.name}
+                  </Button>{" "}
+                </>
+              );
+            })
+            // If user is not admin
+            : tags.map((tag) => `${tag.tag.name} `)}
+        </div>
       </div>
+
       <Row className="mt-5 ml-2">
         <Col>
           <h3>Comments</h3>
