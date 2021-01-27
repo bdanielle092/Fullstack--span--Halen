@@ -164,6 +164,7 @@ const PostDetails = () => {
                 </option>
               ))}
             </Input>
+            <br />
             <Button
               onClick={(e) => {
                 getToken().then(savePostTag).then(getTags);
