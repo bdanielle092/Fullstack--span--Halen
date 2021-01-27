@@ -46,6 +46,8 @@ namespace Tabloid_Fullstack.Repositories
                 .Where(p => p.Active)
                 .Include(p => p.UserProfile)
                 .Include(p => p.Category)
+                .Include(p => p.PostTags)
+                   .ThenInclude(pt => pt.Tag)
                 .Include(p => p.Comments)
                     .ThenInclude(c => c.UserProfile)
                 .Where(p => p.Id == id)
@@ -73,9 +75,6 @@ namespace Tabloid_Fullstack.Repositories
                 })
                 .ToList();
         }
-
-
-
         public void Add(Comment comment)
         {
             comment.Active = true;
@@ -95,6 +94,23 @@ namespace Tabloid_Fullstack.Repositories
             post.Active = true;
             _context.Add(post);
             _context.SaveChanges();
+        }
+        public void AddPostTag(PostTag postTag)
+        {
+            _context.Add(postTag);
+            _context.SaveChanges();
+        }
+        public void RemovePostTag(PostTag postTag)
+        {
+            _context.Remove(postTag);
+            _context.SaveChanges();
+            _context.SaveChanges();
+        }
+
+        public PostTag GetPostTagById(int id)
+        {
+            var postTag = _context.PostTag.FirstOrDefault(pt => pt.Id == id);
+            return postTag;
         }
         public void Delete(int id)
         {
