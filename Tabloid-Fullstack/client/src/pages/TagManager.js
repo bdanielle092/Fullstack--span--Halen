@@ -17,15 +17,20 @@ const TagManager = () => {
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState("");
     const { getCurrentUser, isAdmin } = useContext(UserProfileContext);
+    //this if statment is here for a reason but can't remember why 
+    // useEffect(() => {
+    //     if (getCurrentUser === isAdmin) {
+
+    //         getTags();
+    //     }
+    //     if (getCurrentUser === !isAdmin) {
+    //         return (null)
+    //     }
+    // }, []);
+
 
     useEffect(() => {
-        if (getCurrentUser === isAdmin) {
-
-            getTags();
-        }
-        if (getCurrentUser === !isAdmin) {
-            return (null)
-        }
+        getTags();
     }, []);
 
 

@@ -16,17 +16,20 @@ const CategoryManager = () => {
   const [newCategory, setNewCategory] = useState("");
   const { getCurrentUser, isAdmin } = useContext(UserProfileContext);
 
+  //this if statment is here for a reason but can't remember why 
+  // useEffect(() => {
+  //   if (getCurrentUser === isAdmin) {
+
+  //     getCategories();
+  //   }
+  //   if (getCurrentUser === !isAdmin) {
+  //     return (null)
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (getCurrentUser === isAdmin) {
-
-      getCategories();
-    }
-    if (getCurrentUser === !isAdmin) {
-      return (null)
-    }
+    getCategories();
   }, []);
-
-
 
   const getCategories = () => {
     getToken().then((token) =>
