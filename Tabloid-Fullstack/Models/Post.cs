@@ -30,5 +30,6 @@ namespace Tabloid_Fullstack.Models
         public List<PostTag> PostTags { get; set; }
 
         public List<Comment> Comments { get; set; }
+        public bool Active { get; set; }
     }
 }

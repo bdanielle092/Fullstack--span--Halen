@@ -63,7 +63,7 @@ namespace Tabloid_Fullstack
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tabloid", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tabloid-Fullstack", Version = "v1" });
             });
         }
 
@@ -73,6 +73,8 @@ namespace Tabloid_Fullstack
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tabloid-Fullstack v1"));
             }
 
             app.UseHttpsRedirection();
