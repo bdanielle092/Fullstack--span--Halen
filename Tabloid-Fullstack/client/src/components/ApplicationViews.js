@@ -6,10 +6,13 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PostDetails from "../pages/PostDetails";
 import PostForm from "./PostForm";
+import MyPosts from "./MyPosts";
+import PostEdit from "./PostEdit";
 import CategoryManager from "../pages/CategoryManager";
 import CommentForm from "../pages/CommentForm";
 import TagManager from "../pages/TagManager";
 import NotFoundForm from "./NotFoundForm";
+import HomeForm from "./HomeForm";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -17,13 +20,19 @@ const ApplicationViews = () => {
   return (
     <Switch>
       <Route path="/" exact>
-        {isLoggedIn ? <p>Home</p> : <Redirect to="/login" />}
+        {isLoggedIn ? <HomeForm /> : <Redirect to="/login" />}
       </Route>
       <Route path="/explore">
         {isLoggedIn ? <Explore /> : <Redirect to="/login" />}
       </Route>
+      <Route path="/myposts">
+        {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
+      </Route>
       <Route path="/post/add">
         {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+      </Route>
+      <Route path="/post/edit/:id">
+        {isLoggedIn ? <PostEdit /> : <Redirect to="/login" />}
       </Route>
       <Route path="/post/:postId(\d+)">
         {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
@@ -46,7 +55,6 @@ const ApplicationViews = () => {
       <Route path="/404">
         <NotFoundForm />
       </Route>
-
     </Switch>
   );
 };

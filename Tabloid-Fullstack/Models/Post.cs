@@ -29,5 +29,6 @@ namespace Tabloid_Fullstack.Models
         public List<PostReaction> PostReactions { get; set; }
 
         public List<Comment> Comments { get; set; }
+        public bool Active { get; set; }
     }
 }

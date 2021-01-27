@@ -10,7 +10,6 @@ import {
 import Category from "../components/Category";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
-
 const CategoryManager = () => {
   const { getToken } = useContext(UserProfileContext);
   const [categories, setCategories] = useState([]);
@@ -62,9 +61,8 @@ const CategoryManager = () => {
   };
   //add an onEdit to use in Category to give access to getCategories
   if (!isAdmin()) {
-    return <Redirect to="/404" />
+    return <Redirect to="/404" />;
   } else {
-
     return (
       <div className="container mt-5">
         <img
@@ -79,7 +77,11 @@ const CategoryManager = () => {
             <ListGroup>
               {categories.map((category) => (
                 <ListGroupItem key={category.id}>
-                  <Category category={category} onEdit={getCategories} onDelete={getCategories} />
+                  <Category
+                    category={category}
+                    onEdit={getCategories}
+                    onDelete={getCategories}
+                  />
                 </ListGroupItem>
               ))}
             </ListGroup>
@@ -97,10 +99,7 @@ const CategoryManager = () => {
         </div>
       </div>
     );
-
-  };
-
-}
-
+  }
+};
 
 export default CategoryManager;
