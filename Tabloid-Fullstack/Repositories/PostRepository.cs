@@ -24,6 +24,7 @@ namespace Tabloid_Fullstack.Repositories
             // regex = new regex
             var regex = new Regex(@"\w*\s*");
             return _context.Post
+                .Where(p => p.Active)
                 .Include(p => p.Category)
                 .Where(p => p.IsApproved)
                 .Where(p => p.PublishDateTime <= DateTime.Now)
@@ -49,12 +50,24 @@ namespace Tabloid_Fullstack.Repositories
         public Post GetById(int id)
         {
             return _context.Post
+                .Where(p => p.Active)
                 .Include(p => p.UserProfile)
                 .Include(p => p.Category)
                 .Include(p => p.Comments)
                     .ThenInclude(c => c.UserProfile)
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
+        }
+
+        public List<Post> GetByUserId(int id)
+        {
+            return _context.Post
+                .Where(p => p.Active)
+                .Include(p => p.UserProfile)
+                .Include(p => p.Category)
+                .Where(p => p.UserProfileId == id)
+                .OrderByDescending(p => p.PublishDateTime)
+                .ToList();
         }
 
         public List<ReactionCount> GetReactionCounts(int postId)
@@ -67,8 +80,6 @@ namespace Tabloid_Fullstack.Repositories
                 })
                 .ToList();
         }
-
-
 
 
 
@@ -88,7 +99,22 @@ namespace Tabloid_Fullstack.Repositories
         }
         public void Add(Post post)
         {
+            post.Active = true;
             _context.Add(post);
+            _context.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            var post = GetById(id);
+            post.Active = false;
+            _context.Entry(post).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void Update(Post post)
+        {
+            post.Active = true;
+            _context.Entry(post).State = EntityState.Modified;
             _context.SaveChanges();
         }
     }
