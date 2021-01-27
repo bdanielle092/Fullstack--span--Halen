@@ -20,16 +20,11 @@ const PostDetails = () => {
   const user = getCurrentUser();
   const { postId } = useParams();
   const [post, setPost] = useState();
-  const [posts, setPosts] = useState([])
   const [reactionCounts, setReactionCounts] = useState([]);
   const history = useHistory();
-  const [comments, setComments] = useState([]);
   const [tags, setTags] = useState([]);
   const [tagId, setTagId] = useState("");
   const [tagsList, setTagsList] = useState([]);
-  const currentUser = getCurrentUser();
-  const [reactionCounts, setReactionCounts] = useState([]);
-  const history = useHistory();
   const [comment, setComments] = useState([]);
 
   useEffect(() => {
@@ -39,6 +34,7 @@ const PostDetails = () => {
         setComments(comment);
       });
   }, []);
+
 
   const removeComment = (id) => {
     const filteredComments = comment.filter(c => c.id !== id);
@@ -77,6 +73,7 @@ const PostDetails = () => {
         })
     );
   };
+
   //Dropdown of all tags NOT already assigned to post
   const PostTags = (_) => {
     const tagsOnPost = tags.map((tag) => tag.tag);
@@ -117,7 +114,7 @@ const PostDetails = () => {
         })
         .then((_) => {
           getTags();
-        })
+        }).then(() => { history.push(`/api/post/${post.id}`) })
     })
   }
   //useEffect
@@ -149,14 +146,16 @@ const PostDetails = () => {
         <div className="my-4">
           <PostReactions postReactions={reactionCounts} />
         </div>
-
+        <br />
+        <br />
         {verifyUser() || isAdmin() ? (
           <>
             <Input type="select" onChange={(e) => handleChange(e)}>
               <option value="0">Select a tag..</option>
               {PostTags().map((tag) => (
                 <option value={tag.id} key={tag.id}>
-                  {tag.name}
+                  {" "}
+                  {tag.name}{" "}
                 </option>
               ))}
             </Input>
