@@ -361,6 +361,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-client/.eslintcache
 appsettings.Local.json
+.eslintcache
 *.env.local
