@@ -68,8 +68,8 @@ namespace Tabloid_Fullstack.Controllers
 
         {
             var user = GetCurrentUserProfile();
-            var myPosts = _repo.GetByUserId(user.Id);
-            return Ok(myPosts);
+            var posts = _repo.GetByUserId(user.Id);
+            return Ok(posts);
         }
 
         [HttpPost]
@@ -78,6 +78,7 @@ namespace Tabloid_Fullstack.Controllers
             var user = GetCurrentUserProfile();
             post.UserProfileId = user.Id;
             post.CreateDateTime = DateTime.Now;
+            if(user.UserTypeId == 1) { post.IsApproved = true; }
             post.IsApproved = true;
             _repo.Add(post);
             return CreatedAtAction("Get", new { id = post.Id }, post);
