@@ -99,18 +99,15 @@ namespace Tabloid_Fullstack.Controllers
         [HttpPut("myposts/{id}")]
         public IActionResult Update(int id, Post post)
         {
+            var existingPost = _repo.GetById(id);
+            var user = GetCurrentUserProfile();
+
             if (id != post.Id)
             {
                 return BadRequest();
             }
-            var existingPost = _repo.GetById(id);
-            var user = GetCurrentUserProfile();
 
-            if (existingPost == null)
-            {
-                return NotFound();
-            }
-            if (existingPost.UserProfileId != user.Id || user.UserTypeId != 1)
+            if (existingPost.UserProfileId != user.Id )
             {
                 return Unauthorized();
             }
@@ -118,8 +115,6 @@ namespace Tabloid_Fullstack.Controllers
             existingPost.Title = post.Title;
             existingPost.Content = post.Content;
             existingPost.CategoryId = post.CategoryId;
-            existingPost.PublishDateTime = post.PublishDateTime;
-
             _repo.Update(existingPost);
             return NoContent();
         }
