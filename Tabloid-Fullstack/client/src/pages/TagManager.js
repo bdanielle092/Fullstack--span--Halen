@@ -16,12 +16,18 @@ const TagManager = () => {
     const { getToken } = useContext(UserProfileContext);
     const [tags, setTags] = useState([]);
     const [newTag, setNewTag] = useState("");
-    const { isAdmin } = useContext(UserProfileContext);
-
+    const { getCurrentUser, isAdmin } = useContext(UserProfileContext);
 
     useEffect(() => {
-        getTags();
+        if (getCurrentUser === isAdmin) {
+
+            getTags();
+        }
+        if (getCurrentUser === !isAdmin) {
+            return (null)
+        }
     }, []);
+
 
     const getTags = () => {
         getToken().then((token) =>

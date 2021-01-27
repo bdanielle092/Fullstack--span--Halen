@@ -14,9 +14,8 @@ import {
 import { UserProfileContext } from "../providers/UserProfileProvider";
 
 const AppHeader = () => {
-  const { getCurrentUser, logout, isAdmin } = useContext(UserProfileContext);
-  // const user = JSON.parse(localStorage.getItem("userProfile"));
-  const user = getCurrentUser();
+  const { logout, isAdmin } = useContext(UserProfileContext);
+  const user = JSON.parse(localStorage.getItem("userProfile"));
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 

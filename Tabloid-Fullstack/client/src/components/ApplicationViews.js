@@ -9,14 +9,12 @@ import PostForm from "./PostForm";
 import MyPosts from "./MyPosts";
 import PostEdit from "./PostEdit";
 import CategoryManager from "../pages/CategoryManager";
-
 import CommentForm from "../pages/CommentForm";
 import TagManager from "../pages/TagManager";
 import NotFoundForm from "./NotFoundForm";
 
 const ApplicationViews = () => {
   const { isLoggedIn } = useContext(UserProfileContext);
-  const { isAdmin } = useContext(UserProfileContext);
 
   return (
     <Switch>
@@ -54,7 +52,7 @@ const ApplicationViews = () => {
         <Register />
       </Route>
       <Route path="/404">
-        <h1>Not Found</h1>
+        <NotFoundForm />
       </Route>
     </Switch>
   );

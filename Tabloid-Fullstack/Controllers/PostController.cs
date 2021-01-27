@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Tabloid_Fullstack.Models;
 using Tabloid_Fullstack.Models.ViewModels;
 using Tabloid_Fullstack.Repositories;
@@ -15,7 +11,6 @@ namespace Tabloid_Fullstack.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-
         private readonly IPostRepository _repo;
         private readonly IUserProfileRepository _userRepo;
 
@@ -49,6 +44,13 @@ namespace Tabloid_Fullstack.Controllers
             };
             return Ok(postDetails);
         }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _repo.GetByFirebaseUserId(firebaseUserId);
+        }
+
 
         [HttpPost("addcomment")]
         public IActionResult Add(Comment comment)
@@ -120,11 +122,6 @@ namespace Tabloid_Fullstack.Controllers
 
             _repo.Update(existingPost);
             return NoContent();
-        }
-        private UserProfile GetCurrentUserProfile()
-        {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userRepo.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }
