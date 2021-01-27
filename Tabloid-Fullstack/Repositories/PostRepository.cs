@@ -21,6 +21,7 @@ namespace Tabloid_Fullstack.Repositories
 
         public List<PostSummary> Get()
         {
+            // regex = new regex
             var regex = new Regex(@"\w*\s*");
             return _context.Post
                 .Include(p => p.Category)
@@ -37,7 +38,9 @@ namespace Tabloid_Fullstack.Repositories
                     AbbreviatedText = p.Content.Substring(0, 200),
                     PublishDateTime = p.PublishDateTime,
                     Category = p.Category,
+                    //content = p.Content is getting the post content
                     Content = p.Content,
+                    //wordCount = the regex.matches is removing the space from the post content and then the ,count is counting the number of words in the content 
                     wordCount = regex.Matches(p.Content).Count
                 })
                 .ToList();
